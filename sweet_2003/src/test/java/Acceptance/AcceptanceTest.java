@@ -13,7 +13,7 @@ import io.cucumber.junit.CucumberOptions.SnippetType;
 
 @CucumberOptions(
  
-features = "Features/mgt.feature",
+features = "Features/User Management.feature",
 
 plugin = {"summary", "html:target/cucumber/report.html"},
 
