@@ -1,29 +1,18 @@
-#Author: your.email@your.domain.com
-#Keywords Summary :
-#Feature: List of scenarios.
-#Scenario: Business rule through list of steps with arguments.
-#Given: Some precondition step
-#When: Some key actions
-#Then: To observe outcomes or validation
-#And,But: To enumerate more Given,When,Then steps
-#Scenario Outline: List of steps for data-driven as an Examples and <placeholder>
-#Examples: Container for s table
-#Background: List of steps run before each of the scenarios
-#""" (Doc Strings)
-#| (Data Tables)
-#@ (Tags/Labels):To group Scenarios
-#<> (placeholder)
-#""
-## (Comments)
-#Sample Feature Definition Template
-@tag
-Feature: user login and logout
-  @tag1
-  @myrun
-  Scenario: user login
-    Given user not logged in the system
-    When user enters username "jawad" and password "123456"
-    Then user logs in
-    And success message pops up
+Feature: Login and Logout
 
- 
+  Scenario: Successfully login
+    Given the user is not logged in
+    When the user enters the username "jawad" and the password "123456"
+    Then the user is logged in
+    And a success message pops up
+
+  Scenario: Unsuccessful login
+    Given the user is not logged in
+    When the user enters a wrong username and a wrong password
+    Then the user can't log in
+    And an unsuccessful message pops up
+
+  Scenario: Logout
+    Given the user is already logged in
+    When the user chooses the logout option
+    Then the user is logged out

@@ -7,7 +7,7 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features="Features/AdminLogin.feature",
+		features="Features",
 		plugin= {"html:target/cucumber-report/report.html"},
 		monochrome = true,
 		
