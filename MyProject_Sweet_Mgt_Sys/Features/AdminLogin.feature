@@ -20,10 +20,15 @@
 Feature: user login and logout
   @tag1
   @myrun
-  Scenario: user login
-    Given user not logged in the system
-    When user enters username "jawad" and password "123456"
-    Then user logs in
+  Scenario: admin login success
+    Given admin not logged in the system
+    When admin enters username "Admin" and password "123456"
+    Then admin logs in
     And success message pops up
 
- 
+  Scenario: admin login fail
+    Given admin not logged in the system
+    When admin enters username "Admin" and password "123456789"
+    Then admin does not login
+    And error message pops up
+  
