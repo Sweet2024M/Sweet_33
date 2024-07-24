@@ -1,9 +1,14 @@
 package ProductionCode;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MyApp {
-
+String fileName="files/users.txt";
+	
+	
     private ArrayList<User> users;
     private boolean loggedIn;
     private boolean successMessageDisplayed;
@@ -12,11 +17,21 @@ public class MyApp {
     public MyApp() {
         // Initialize the ArrayList and add users
         this.users = new ArrayList<>();
-        this.users.add(new User("mohammad", "123"));
-        this.users.add(new User("jawad", "password1"));
-        this.users.add(new User("bashar", "password2"));
-        this.users.add(new User("rami", "password3"));
-        this.users.add(new User("diana", "password4"));
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Assuming each line in the file is in the format: name,age
+                String[] parts = line.split(",");
+                if (parts.length == 2) {
+                    String name = parts[0];
+                    String password = parts[1];
+                    User user = new User(name, password);
+                    this.users.add(user);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         
         // Initialize other fields
         this.loggedIn = false;
