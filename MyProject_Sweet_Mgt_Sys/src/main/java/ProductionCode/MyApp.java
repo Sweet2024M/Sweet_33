@@ -1,13 +1,15 @@
 package ProductionCode;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class MyApp {
 
-	String fileName="files/users.txt";
+	String filePath="files/users.txt";
 	
 	
     private ArrayList<User> users;
@@ -15,10 +17,16 @@ public class MyApp {
     private boolean successMessageDisplayed;
     private boolean errorMessageDisplayed;
 
+
+	public boolean isSigndUp;
+
+
+	public boolean accountCreated;
+
     public MyApp() {
         // Initialize the ArrayList and add users
         this.users = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 // Assuming each line in the file is in the format: name,age
@@ -72,4 +80,29 @@ public class MyApp {
     public boolean isErrorMessageDisplayed() {
         return errorMessageDisplayed;
     }
-}
+    
+    public void signUp(String username, String password) {
+    	 try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath,true))) {
+            
+                 writer.write(username+","+password);
+                 writer.newLine();
+             
+             System.out.println("Credentials written to file successfully.");
+         } catch (IOException e) {
+             System.err.println("An error occurred while writing to the file: " + e.getMessage());
+         }
+     }
+
+	public boolean searchName(String username, String password) {
+		for (User user : users) {
+		if (user.getName()==username) {
+			this.isSigndUp=true;
+		} else {
+			this.isSigndUp=false;
+		}
+		}
+		return this.isSigndUp;
+	}
+    }
+    
+
