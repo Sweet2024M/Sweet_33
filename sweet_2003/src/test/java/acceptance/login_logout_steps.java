@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import ProductionCode.MyApp;
+import ProductionCode.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
@@ -24,7 +25,8 @@ public class login_logout_steps {
 
     @When("the user enters the username {string} and the password {string}")
     public void the_user_enters_the_username_and_the_password(String username, String password) {
-        app.login(username, password);
+    	//User u=new User(username,password);
+        app.login(username,password);
     }
 
     @Then("the user is logged in")
