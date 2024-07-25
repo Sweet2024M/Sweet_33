@@ -12,7 +12,7 @@ public class MyApp {
 	String filePath="files/users.txt";
 	
 	
-    private ArrayList<User> users;
+    public ArrayList<User> users;
     private boolean loggedIn;
     private boolean successMessageDisplayed;
     private boolean errorMessageDisplayed;
