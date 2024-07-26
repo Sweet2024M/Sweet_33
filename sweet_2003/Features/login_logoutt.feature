@@ -16,3 +16,6 @@ Feature: Login and Logout
     Given the user is already logged in
     When the user chooses the logout option
     Then the user is logged out
+    
+    
+    

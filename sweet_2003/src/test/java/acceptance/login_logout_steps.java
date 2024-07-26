@@ -26,7 +26,7 @@ public class login_logout_steps {
     @When("the user enters the username {string} and the password {string}")
     public void the_user_enters_the_username_and_the_password(String username, String password) {
     	//User u=new User(username,password);
-        app.login(username,password);
+        app.user_login(username,password);
     }
 
     @Then("the user is logged in")
@@ -41,7 +41,7 @@ public class login_logout_steps {
 
     @When("the user enters a wrong username and a wrong password")
     public void the_user_enters_wrong_username_and_password() {
-        app.login("wrongUsername", "wrongPassword");
+        app.user_login("wrongUsername", "wrongPassword");
     }
 
     @Then("the user can't log in")
@@ -56,7 +56,7 @@ public class login_logout_steps {
 
     @Given("the user is already logged in")
     public void the_user_is_already_logged_in() {
-        app.login("mohammad", "123");
+        app.user_login("mohammad", "123");
         assertTrue(app.isLoggedIn());
     }
 

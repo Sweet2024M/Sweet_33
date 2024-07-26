@@ -2,58 +2,66 @@ package ProductionCode;
 
 import java.util.ArrayList;
 
-public class MyApp {
+public class MyApp extends Login{
+	
+	
+	public MyApp() {
+		super();
+		Login.login_page=true;// why it make error when i use an inheritance relation like directly write the name of the variable login_page
+		
+	}
 
-    private ArrayList<User> users;
-    private boolean loggedIn;
-    private boolean successMessageDisplayed;
-    private boolean errorMessageDisplayed;
+	public void submitLogin() {
+		if(loggedIn) {
+			 switch(type_user) {
+	         case "Admin":
+	        	 admin_dashboard();
+	             break;
+	         case "Beneficiary User":
+	        	 user_dashboard();
+	             break;
+	         case "Raw Material Supplier":
+	        	 supplier_dashboard();
+	             break;
+	         case "Store Owner":
+	        	 owner_dashboard();
+	             break;
+	         //default:
+	     }
+		}
+			
+		}
 
-    public MyApp() {
-        // Initialize the ArrayList and add users
-        this.users = new ArrayList<>();
-        this.users.add(new User("mohammad", "123"));
-        this.users.add(new User("jawad", "password1"));
-        this.users.add(new User("bashar", "password2"));
-        this.users.add(new User("rami", "password3"));
-        this.users.add(new User("diana", "password4"));
-        
-        // Initialize other fields
-        this.loggedIn = false;
-        this.successMessageDisplayed = false;
-        this.errorMessageDisplayed = false;
-    }
+	private void owner_dashboard() {
+		isDashboardVisible();
+		// TODO Auto-generated method stub
+		
+	}
 
-    public void login(String username, String password) {
-        for (User u : users) //for(the type of arraylist : the name of arraylist)
-       {
-            if (u.getName().equals(username) && u.getPassword().equals(password)) {
-                loggedIn = true;
-                successMessageDisplayed = true;
-                errorMessageDisplayed = false;
-                return;// to brake the for loop and the function 
-            }
-        }
-        loggedIn = false;
-        successMessageDisplayed = false;
-        errorMessageDisplayed = true;
-    }
+	private void supplier_dashboard() {
+		isDashboardVisible();
 
-    public void logout() {
-        loggedIn = false;
-        successMessageDisplayed = false;
-        errorMessageDisplayed = false;
-    }
+		// TODO Auto-generated method stub
+		
+	}
 
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
+	private void user_dashboard() {
+		// TODO Auto-generated method stub
+		isDashboardVisible();
 
-    public boolean isSuccessMessageDisplayed() {
-        return successMessageDisplayed;
-    }
+	}
 
-    public boolean isErrorMessageDisplayed() {
-        return errorMessageDisplayed;
-    }
+	private void admin_dashboard() {
+		// TODO Auto-generated method stub
+		isDashboardVisible();
+
+	}
+
+	public boolean isDashboardVisible() {
+		return true;
+	}
+	
+	
+
+
 }
