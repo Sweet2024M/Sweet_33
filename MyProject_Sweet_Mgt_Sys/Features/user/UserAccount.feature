@@ -16,23 +16,21 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@tag
-Feature: user mangement
- 
-  @tag1
-  Scenario: User sign up for new account
-    Given the user is not in the system
-    When user enters username "musa" and password "12346" 
-    Then account created successfully
-    And success message pops up
-
-
-
- @tag2
-  Scenario: User sign up for new account
-    Given the user is not in the system
-    When user enters username "musa" already exists in the system 
-    Then account not created
-    And error message pops up
-
+Feature: User Account
+  Scenario: User signs up for a new account
+    Given the user is not logged in 
+    When the user enters username  "mahmoud" password "123" and role "Material_supplier"
+    Then the user account should be created successfully
+    
+    
+    
+  Scenario: User signs in with valid details 
+    Given the user is not logged in 
+    When the user enters username "musa" and password "123" role "user" 
+    Then user enters to the dash
+    
+  
+  
+  
+  
   

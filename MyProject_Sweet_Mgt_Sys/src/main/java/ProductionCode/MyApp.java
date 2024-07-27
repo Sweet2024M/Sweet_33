@@ -9,114 +9,152 @@ import java.util.ArrayList;
 
 public class MyApp {
 
-	String filePath="files/users.txt";
-	
-	
-    public ArrayList<User> users;
-    private boolean loggedIn;
-    private boolean successMessageDisplayed;
-    private boolean errorMessageDisplayed;
-
-
+	private String filePath="";
+	public boolean isLoggedIn;
 	public boolean isSigndUp;
-
-
-	public boolean accountCreated;
-
-
-	public boolean userExists;
-
-    public MyApp() {
-        // Initialize the ArrayList and add users
-        this.users = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                // Assuming each line in the file is in the format: name,age
-                String[] parts = line.split(",");
-                if (parts.length == 2) {
-                    String name = parts[0];
-                    String password = parts[1];
-                    User user = new User(name, password);
-                    this.users.add(user);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        // Initialize other fields
-        this.loggedIn = false;
-        this.successMessageDisplayed = false;
-        this.errorMessageDisplayed = false;
-    }
-
-    public void login(String username, String password) {
-        for (User u : users) //for(the type of arraylist : the name of arraylist)
-       {
-            if (u.getName().equals(username) && u.getPassword().equals(password)) {
-                loggedIn = true;
-                successMessageDisplayed = true;
-                errorMessageDisplayed = false;
-                return;// to brake the for loop and the function 
-            }
-        }
-        loggedIn = false;
-        successMessageDisplayed = false;
-        errorMessageDisplayed = true;
-    }
-
-    public void logout() {
-        loggedIn = false;
-        successMessageDisplayed = false;
-        errorMessageDisplayed = false;
-    }
-
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
-
-    public boolean isSuccessMessageDisplayed() {
-        return successMessageDisplayed;
-    }
-
-    public boolean isErrorMessageDisplayed() {
-        return errorMessageDisplayed;
-    }
-    
-    public void signUp(String username, String password) {
-    	 try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath,true))) {
-            
-                 writer.write(username+","+password);
-                 writer.newLine();
-                 isSigndUp=true;
-                 successMessageDisplayed=true;
-                 accountCreated=true;
-             
-             System.out.println("Credentials written to file successfully.");
-         } catch (IOException e) {
-             System.err.println("An error occurred while writing to the file: " + e.getMessage());
-         }
-     }
-
-	public boolean searchName(String username, String password) {
-		for (User user : users) {
-		if (user.getName()==username) {
-			this.isSigndUp=true;
-		} else {
-			this.isSigndUp=false;
-		}
-		}
-		return this.isSigndUp;
-	}
-
-	public void checkUserExists(String un) {
-		// TODO Auto-generated method stub
-		for (User user : users) {
-			userExists = user.getName()==un?true:false ;
-		}
+	
+	 public ArrayList<User> users;
+	 public ArrayList<StoreOwner> store_owners;
+	 public ArrayList<MaterialSupplier> material_suppliers;
+	private boolean UserLoggedIn;
+	private boolean StoreOwnerLoggedIn;
+	private boolean MaterialSupplierLoggedIn;
+	public boolean userDashOpen;
+	
+	 
+	public MyApp() {
+		super();
 		
+		
+		  this.users = new ArrayList<>();
+	        try (BufferedReader br = new BufferedReader(new FileReader("files/users.txt"))) {
+	            String line;
+	            while ((line = br.readLine()) != null) {
+	                // Assuming each line in the file is in the format: name,age
+	                String[] parts = line.split(",");
+	                if (parts.length == 2) {
+	                    String name = parts[0];
+	                    String password = parts[1];
+	                    User user = new User(name, password);
+	                    this.users.add(user);
+	                }
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        
+	        
+	        
+	        this.store_owners = new ArrayList<>();
+	        try (BufferedReader br = new BufferedReader(new FileReader("files/store_owners.txt"))) {
+	            String line;
+	            while ((line = br.readLine()) != null) {
+	                // Assuming each line in the file is in the format: name,age
+	                String[] parts = line.split(",");
+	                if (parts.length == 2) {
+	                    String name = parts[0];
+	                    String password = parts[1];
+	                    StoreOwner user = new StoreOwner(name, password);
+	                    this.store_owners.add(user);
+	                }
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	  
+	        
+	        
+	        this.material_suppliers = new ArrayList<>();
+	        try (BufferedReader br = new BufferedReader(new FileReader("files/material.txt"))) {
+	            String line;
+	            while ((line = br.readLine()) != null) {
+	                // Assuming each line in the file is in the format: name,age
+	                String[] parts = line.split(",");
+	                if (parts.length == 2) {
+	                    String name = parts[0];
+	                    String password = parts[1];
+	                    MaterialSupplier user = new MaterialSupplier(name, password);
+	                    this.material_suppliers.add(user);
+	                }
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	       	        
+	    }
+		
+	
+
+	public void SignUp(String username, String password, String role) {
+	  if (role.equals("user")) {
+		filePath="files/users.txt";
 	}
+	  else if (role.equals("Store_owner")) {
+		  filePath="files/store_owners.txt";
+	}
+	  else if (role.equals("Material_supplier")) {
+		  filePath="files/material_suppliers.txt";
+	}
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+           
+			  writer.write(username+","+password);
+              writer.newLine();
+              isSigndUp=true;
+            
+            System.out.println("User details written to file successfully.");
+        } catch (IOException e) {
+            System.err.println("An error occurred while writing to the file: "+filePath + e.getMessage());
+        }
     }
-    
+
+	public void login(String username, String password,String role) {
+		 if (role.equals("user")) {
+				for (User a : users) {
+					isLoggedIn=a.getUsername().equals(username) && a.getPassword().equals(password)?true:false;
+					UserLoggedIn=true;
+					if(isLoggedIn) return ;
+				}
+				
+
+				
+			}
+			  else if (role.equals("Store_owner")) {
+				  for (StoreOwner a : store_owners) {
+						isLoggedIn=a.getUsername().equals(username) && a.getPassword().equals(password)?true:false;
+						StoreOwnerLoggedIn=true;
+						if(isLoggedIn) return ;
+					}
+			}
+			  else if (role.equals("Material_supplier")) {
+				  for (MaterialSupplier a : material_suppliers) {
+						isLoggedIn=a.getUsername().equals(username) && a.getPassword().equals(password)?true:false;
+						MaterialSupplierLoggedIn=true;
+						if(isLoggedIn) return ;
+					}
+			}
+		 
+	}
+
+
+
+	public void openUserDash() {
+		if (!UserLoggedIn) return; 
+		userDashOpen=true;
+		
+		
+		
+		System.out.println("welcome user");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	}
+
 
