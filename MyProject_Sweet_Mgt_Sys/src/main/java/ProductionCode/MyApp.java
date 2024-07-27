@@ -112,6 +112,7 @@ public class MyApp {
 				for (User a : users) {
 					isLoggedIn=a.getUsername().equals(username) && a.getPassword().equals(password)?true:false;
 					UserLoggedIn=true;
+					openUserDash();
 					if(isLoggedIn) return ;
 				}
 				
