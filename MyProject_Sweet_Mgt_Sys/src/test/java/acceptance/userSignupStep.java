@@ -28,24 +28,25 @@ public class userSignupStep {
 	}
 	@Then("account created successfully")
 	public void account_created_successfully() {
-	    assertTrue(app.accountCreated=true);
+	    assertTrue(app.accountCreated);
 	}
 	@Then("success message pops up")
 	public void success_message_pops_up() {
-        assertTrue(true);
+        assertTrue(app.isSuccessMessageDisplayed());
 }
 	
 	
-	@When("user enters username already exists in the system")
-	public void user_enters_username_already_exists_in_the_system() {
-	    assertFalse(app.searchName("invalid", "invalid"));
+	@When("user enters username {string} already exists in the system")
+	public void user_enters_username_already_exists_in_the_system(String un) {
+	  app.checkUserExists(un);
+      assertTrue(app.userExists);
 	}
 	@Then("account not created")
 	public void account_not_created() {
 	    assertFalse(app.accountCreated);	}
 	@Then("error message pops up")
 	public void error_message_pops_up() {
-	    assertTrue(true);
+	    assertTrue(app.isErrorMessageDisplayed());
 	}
 	
 	

@@ -23,6 +23,9 @@ public class MyApp {
 
 	public boolean accountCreated;
 
+
+	public boolean userExists;
+
     public MyApp() {
         // Initialize the ArrayList and add users
         this.users = new ArrayList<>();
@@ -86,6 +89,9 @@ public class MyApp {
             
                  writer.write(username+","+password);
                  writer.newLine();
+                 isSigndUp=true;
+                 successMessageDisplayed=true;
+                 accountCreated=true;
              
              System.out.println("Credentials written to file successfully.");
          } catch (IOException e) {
@@ -102,6 +108,14 @@ public class MyApp {
 		}
 		}
 		return this.isSigndUp;
+	}
+
+	public void checkUserExists(String un) {
+		// TODO Auto-generated method stub
+		for (User user : users) {
+			userExists = user.getName()==un?true:false ;
+		}
+		
 	}
     }
     

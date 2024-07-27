@@ -31,7 +31,7 @@ Feature: user mangement
  @tag2
   Scenario: User sign up for new account
     Given the user is not in the system
-    When user enters username already exists in the system 
+    When user enters username "musa" already exists in the system 
     Then account not created
     And error message pops up
 
