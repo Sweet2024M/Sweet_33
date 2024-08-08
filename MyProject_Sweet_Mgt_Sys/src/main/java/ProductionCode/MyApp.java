@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class MyApp {
 
 	private String filePath="";
-	public boolean isLoggedIn;
+	public boolean isUserLoggedIn;
 	public boolean isSigndUp;
 	
 	 public ArrayList<User> users;
@@ -110,10 +110,10 @@ public class MyApp {
 	public void login(String username, String password,String role) {
 		 if (role.equals("user")) {
 				for (User a : users) {
-					isLoggedIn=a.getUsername().equals(username) && a.getPassword().equals(password)?true:false;
+					isUserLoggedIn=a.getUsername().equals(username) && a.getPassword().equals(password)?true:false;
 					UserLoggedIn=true;
 					openUserDash();
-					if(isLoggedIn) return ;
+					if(isUserLoggedIn) return ;
 				}
 				
 
@@ -121,16 +121,16 @@ public class MyApp {
 			}
 			  else if (role.equals("Store_owner")) {
 				  for (StoreOwner a : store_owners) {
-						isLoggedIn=a.getUsername().equals(username) && a.getPassword().equals(password)?true:false;
+						isUserLoggedIn=a.getUsername().equals(username) && a.getPassword().equals(password)?true:false;
 						StoreOwnerLoggedIn=true;
-						if(isLoggedIn) return ;
+						if(isUserLoggedIn) return ;
 					}
 			}
 			  else if (role.equals("Material_supplier")) {
 				  for (MaterialSupplier a : material_suppliers) {
-						isLoggedIn=a.getUsername().equals(username) && a.getPassword().equals(password)?true:false;
+						isUserLoggedIn=a.getUsername().equals(username) && a.getPassword().equals(password)?true:false;
 						MaterialSupplierLoggedIn=true;
-						if(isLoggedIn) return ;
+						if(isUserLoggedIn) return ;
 					}
 			}
 		 
@@ -145,6 +145,15 @@ public class MyApp {
 		
 		
 		System.out.println("welcome user");
+	}
+
+
+
+	public void manageAccoutn() {
+		// TODO Auto-generated method stub
+
+		
+		
 	}
 	
 	

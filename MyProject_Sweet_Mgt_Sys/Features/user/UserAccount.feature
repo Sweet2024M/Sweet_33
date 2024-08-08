@@ -29,6 +29,19 @@ Feature: User Account
     When the user enters username "musa" and password "123" role "user" 
     Then user enters to the dash
     
+  Scenario: User updates his password 
+    Given the user is logged in 
+    When the user when the user chooses manage account and then update account and the user chooses update "password" and enters a new password "123456" 
+    Then update successful 
+    And user returns to dash
+  
+  
+  Scenario: User updates his username 
+    Given the user is logged in 
+    When the user when the user chooses manage account and then update account And the user chooses update "username" and enters a new username "khader"  
+    Then update successful 
+    And user returns to dash
+  
   
   
   
