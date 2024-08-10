@@ -7,15 +7,11 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features="Features/user/UserAccount.feature",
-		plugin= {"html:target/cucumber-report/report.html"},
-		monochrome = true,
-		
-		glue = "acceptance"
-		
-		)
-
+        features = "UserMangement2.feature",
+        plugin = {"html:target/cucumber-report/report.html"},
+        monochrome = true,
+        glue = "acceptance"
+)
 
 public class AcceptanceTest {
-
 }
