@@ -2,6 +2,9 @@ package acceptance;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import ProductionCode.MyApp;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -12,23 +15,25 @@ public class UserManagement {
 
     MyApp app;
 
-    @Given("I am logged in as an admin")
-    public void i_am_logged_in_as_an_admin() {
-        app = new MyApp();
+    public UserManagement(MyApp app) {
+		super();
+		this.app = app;
+	}
+
+	@Given("I am logged in as an admin")
+    public void i_am_logged_in_as_an_admin() throws FileNotFoundException, IOException {
         app.login("mohammad123", "123", "Admin");
         assertTrue(app.AdminLoggedIn);
     }
 
     @Given("I am on the admin dashboard")
-    public void i_am_on_the_admin_dashboard() {
-        app = new MyApp();
+    public void i_am_on_the_admin_dashboard() throws FileNotFoundException, IOException {
         app.AdminDashboardpage();
         assertTrue(app.adminDashbordOpen);
     }
 
     @Given("I select {string} from the dashboard options")
-    public void i_select_from_the_dashboard_options(String option) {
-        app = new MyApp();
+    public void i_select_from_the_dashboard_options(String option) throws FileNotFoundException, IOException {
         app.AdminDashboardOptiones("1");
     }
 
