@@ -5,7 +5,7 @@ import java.util.*;
 
 public class User {
     private String currentUsername;
-    private static final String FEEDBACK_FILE_PATH = "files\feedback.txt";
+    private static final String FEEDBACK_FILE_PATH = "files\\feedback.txt";
     private static final String OWNER_FILE_PATH ="files\\messagesToOwner.txt";
     private static final String SUPPLIER_FILE_PATH = "files\\messagesToSupplier.txt";
     private static final String PRODUCTS_FILE_PATH = "files\\products.txt";
@@ -239,7 +239,7 @@ public class User {
     
     
     public void PostAndSharePersonalDessert(String Recipes, String theComponents) {
-        String filePath = "C:\\Users\\THINKPAD\\git\\Softwar_proj\\alternativeSweet\\files\\recipes.txt";
+        String filePath = "files\\recipes.txt";
         
         // Combine the recipe name and components with a colon separator
         String recipeEntry = Recipes + ":" + theComponents;
@@ -258,7 +258,7 @@ public class User {
     
     
     public void SearchDessertRecipes(String recipesname) {
-        String filePath = "C:\\Users\\THINKPAD\\git\\Softwar_proj\\alternativeSweet\\files\\recipes.txt";
+        String filePath = "files\\recipes.txt";
         
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -292,7 +292,7 @@ public class User {
         }}
   
     public void filterRecipes(String ingredient) {
-        String filePath = "C:\\Users\\THINKPAD\\git\\Softwar_proj\\alternativeSweet\\files\\recipes.txt";
+        String filePath = "files\\recipes.txt";
         
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
