@@ -1,0 +1,6 @@
+mohammad,123
+jawad,123456
+Alice Johnson,22
+Bob Brown,40
+Carol White,35
+musa,12346
