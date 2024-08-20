@@ -9,17 +9,17 @@ import ProductionCode.*;
 
 public class MyApp {
 
-    // Define constants for file paths
-    private static final String USERS_FILE_PATH = "files/users.txt";
-    private static final String STORE_OWNERS_FILE_PATH = "files/store_owners.txt";
-    private static final String MATERIAL_SUPPLIERS_FILE_PATH = "files/material_suppliers.txt";
-    private static final String ADMIN_FILE_PATH = "files/admin.txt";
-    private static final String PRODUCTS_FILE_PATH = "files/products.txt";
-    private static final String ORDERS_FILE_PATH = "files/orders.txt";
-    private static final String MESSAGES_TO_USERS_FILE_PATH = "files/messagesToUsers.txt";
-    private static final String MESSAGES_TO_SUPPLIERS_FILE_PATH = "files/messagesToSuppliers.txt";
-    private static final String MESSAGES_TO_OWNER_FILE_PATH = "files/messagesToOwner.txt";
-    private static final String PURCHASED_PRODUCTS_FILE_PATH = "files/purchasedProducts.txt";
+    // Define constants for file paths with double backslashes
+    private static final String USERS_FILE_PATH = "files\\users.txt";
+    private static final String STORE_OWNERS_FILE_PATH = "files\\store_owners.txt";
+    private static final String MATERIAL_SUPPLIERS_FILE_PATH = "files\\material_suppliers.txt";
+    private static final String ADMIN_FILE_PATH = "files\\admin.txt";
+    private static final String PRODUCTS_FILE_PATH = "files\\products.txt";
+    private static final String ORDERS_FILE_PATH = "files\\orders.txt";
+    private static final String MESSAGES_TO_USERS_FILE_PATH = "files\\messagesToUsers.txt";
+    private static final String MESSAGES_TO_SUPPLIERS_FILE_PATH = "files\\messagesToSuppliers.txt";
+    private static final String MESSAGES_TO_OWNER_FILE_PATH = "files\\messagesToOwner.txt";
+    private static final String PURCHASED_PRODUCTS_FILE_PATH = "files\\purchasedProducts.txt";
 
     private String filePath = "";
     public boolean isUserLoggedIn;
@@ -252,4 +252,435 @@ public class MyApp {
 
     // Additional methods for managing users, products, orders, etc. should be updated similarly.
 
+
+
+    
+    
+    
+    
+
+    public void addUser(String username, String password, String role) {
+        SignUp(username, password, role);
+        String message = "User added successfully.";
+        addedSuccessfully = true;
+        printMessage(message);
+    }
+
+    public void deleteUser(String username) {
+        users.removeIf(user -> user.getUsername().equals(username));
+        store_owners.removeIf(storeOwner -> storeOwner.getUsername().equals(username));
+        material_suppliers.removeIf(supplier -> supplier.getUsername().equals(username));
+        admin.removeIf(adminUser -> adminUser.getUsername().equals(username));
+
+        rewriteFile("files/users.txt", users);
+        rewriteFile("files/store_owners.txt", store_owners);
+        rewriteFile("files/material_suppliers.txt", material_suppliers);
+        rewriteFile("files/admin.txt", admin);
+
+        System.out.println("User " + username + " deleted successfully!");
+        String message = "User deleted successfully.";
+        deletedSuccessfully = true;
+        printMessage(message);
+    }
+
+    public void updateUser(String oldUsername, String newUsername, String newPassword) {
+        for (User user : users) {
+            if (user.getUsername().equals(oldUsername)) {
+                user.setUsername(newUsername);
+                user.setPassword(newPassword);
+                rewriteFile("files/users.txt", users);
+                System.out.println("User updated successfully!");
+                String message = "User updated successfully.";
+                updatedSuccessfully = true;
+                printMessage(message);
+                return;
+            }
+        }
+        for (StoreOwner storeOwner : store_owners) {
+            if (storeOwner.getUsername().equals(oldUsername)) {
+                storeOwner.setUsername(newUsername);
+                storeOwner.setPassword(newPassword);
+                rewriteFile("files/store_owners.txt", store_owners);
+                System.out.println("Store Owner updated successfully!");
+                String message = "User updated successfully.";
+                updatedSuccessfully = true;
+                printMessage(message);
+                return;
+            }
+        }
+        for (MaterialSupplier supplier : material_suppliers) {
+            if (supplier.getUsername().equals(oldUsername)) {
+                supplier.setUsername(newUsername);
+                supplier.setPassword(newPassword);
+                rewriteFile("files/material_suppliers.txt", material_suppliers);
+                System.out.println("Material Supplier updated successfully!");
+                String message = "User updated successfully.";
+                updatedSuccessfully = true;
+                printMessage(message);
+                return;
+            }
+        }
+        for (Admin adminUser : admin) {
+            if (adminUser.getUsername().equals(oldUsername)) {
+                adminUser.setUsername(newUsername);
+                adminUser.setPassword(newPassword);
+                rewriteFile("files/admin.txt", admin);
+                System.out.println("Admin updated successfully!");
+                String message = "User updated successfully.";
+                updatedSuccessfully = true;
+                printMessage(message);
+                return;
+            }
+        }
+
+        System.out.println("User " + oldUsername + " not found.");
+    }
+
+    public void AdminDashboardOptiones(String option) {
+        switch (option) {
+            case "1":
+                userManagementPageOpen = true;
+
+                System.out.println("User Management Page is now open.");
+                System.out.println("Options:");
+                System.out.println("1. View All Users");
+                System.out.println("2. Add User");
+                System.out.println("3. Delete User");
+                System.out.println("4. Update User");
+                System.out.println("5. Back to Admin Dashboard");
+
+                break;
+            case "2":
+                MonitorAndReport();
+                break;
+            case "3":
+            	   contentManagementPageOpen = true;
+            	   
+            	   System.out.println("1. View Recipe");
+                   System.out.println("2. Delete Recipe");
+                   System.out.println("3. View feedback");
+                   System.out.println("4. Respond feedback");
+                   System.out.println("5. Delete feedback");
+            	   break;
+        }
+    }
+
+    public void AdminDashboardpage() {
+        adminDashbordOpen = true;
+        System.out.println("Admin Dashboard is now open.");
+        System.out.println("Available Tasks:");
+        System.out.println("1. Manage User Accounts");
+        System.out.println("2. Monitor and Report");
+        System.out.println("3. Content Management");
+    }
+
+    public void printMessage(String message) {
+        System.out.println(message);
+    }
+
+   
+
+    private void MonitorAndReport() {
+        // TODO Auto-generated method stub
+
+    }
+
+    public void navigateTo(String page) {
+        if (StoreOwnerLoggedIn || MaterialSupplierLoggedIn||AdminLoggedIn) {
+            currentPage = page;
+        } else {
+            throw new AssertionError("User not logged in or invalid user role.");
+        }
+    }
+
+    public void addProduct(String productName, String price, String expDate) {
+        Product newProduct = new Product(productName, price, expDate);
+        Products.add(newProduct);  // Add to the existing list
+        rewriteFile("files/products.txt", Products);  // Write the entire list back to the file
+    }
+
+    public void editProduct(String productName, String price, String expDate) {
+        String updatedline = productName + "," + price + "," + expDate;
+        try {
+            List<String> lines = Files.readAllLines(Paths.get("files/products.txt"));
+            List<String> updatedLines = new ArrayList<>();
+            for (String line : lines) {
+                if (line.contains(productName)) {
+                    updatedLines.add(updatedline); // Replace the line
+                    updateMessage = true;
+                } else {
+                    updatedLines.add(line); // Keep the line unchanged
+                }
+            }
+            Files.write(Paths.get("files/products.txt"), updatedLines);
+            System.out.println("File has been updated successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isProductInList(String name) {
+        for (Product product : Products) {
+            if (product.getProductName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void loadProducts() throws FileNotFoundException, IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader("files/products.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 3) {
+                    String productname = parts[0];
+                    String price = parts[1];
+                    String exp = parts[2];
+                    Product a = new Product(productname, price, exp);
+                    Products.add(a);
+                }
+            }
+        }
+    }
+
+    public void deleteProduct(String productName) {
+        Products.removeIf(product -> product.getProductName().equals(productName));
+        rewriteFile("files/products.txt", Products);  // Write the updated list back to the file
+        deletedProductSuccessfully = true;
+    }
+
+    public void getSalesReport() throws FileNotFoundException, IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader("files/purchasedProducts.txt"))) {
+            String line;
+            double TotalSales = 0;
+            double Profit = 0;
+            int quantity = 0;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 3) {
+                    String purchasedName = parts[0];
+                    String quan = parts[1];
+                    String purchasedPrice = parts[2];
+                    TotalSales += (Double.parseDouble(purchasedPrice) * Double.parseDouble(quan));
+                    quantity += Double.parseDouble(quan);
+                }
+            }
+            Profit = TotalSales - quantity * 50;
+            System.out.println("The Total number of sales: " + quantity);
+            System.out.println("The total sales is: " + TotalSales);
+            System.out.println("The profit is: " + Profit);
+            reportGenerated = true;
+        }
+    }
+
+    public void getBestSellingProduct() throws NumberFormatException, IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader("files/purchasedProducts.txt"))) {
+            String line;
+            int quantity = 0;
+            String name = "";
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 3) {
+                    String productname = parts[0];
+                    String quan = parts[1];
+                    if (quantity < Integer.parseInt(quan)) {
+                        quantity = Integer.parseInt(quan);
+                        name = productname;
+                    }
+                }
+            }
+            System.out.println("The highest number of sales: " + quantity);
+            System.out.println("The best selling product is: " + name);
+        }
+    }
+
+    public void addDiscount(String discount) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader("files/products.txt"))) {
+            String line;
+            double newPrice = 0;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 3) {
+                    String productname = parts[0];
+                    String price = parts[1];
+                    String exp = parts[2];
+                    if (Double.parseDouble(price) == Double.parseDouble(discount)) {
+                        newPrice = Double.parseDouble(price) * 35 / 100;
+                        deleteProduct(productname);
+                        addProduct(productname, "" + newPrice, exp);
+                        System.out.println("The discount at " + productname + ": Original price = " + price + ", Discounted price = " + newPrice);
+                        discountMessagepos = true;
+                    }
+                }
+            }
+        }
+    }
+
+    public void sendMessageToUser(String username, String message) {
+        String path = "files/messagesToSuppliers.txt";
+        String content = username + ", " + message;
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path, true))) {
+            writer.write(content);
+            writer.newLine();
+            System.out.println("Message sent successfully.");
+            messageSentToUser = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendMessageToSupplier(String supplierName, String message) {
+        String path = "files/messagesToUsers.txt";
+        String content = supplierName + ", " + message;
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path, true))) {
+            writer.write(content);
+            writer.newLine();
+            System.out.println("Message sent successfully.");
+            messageSentToSupplier = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendMessageToOwner(String ownerName, String message) {
+        String path = "files/messagesToOwner.txt";
+        String content = ownerName + ", " + message;
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path, true))) {
+            writer.write(content);
+            writer.newLine();
+            System.out.println("Message sent successfully.");
+            messageSentToSupplier = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showAccountDetails() {
+        System.out.println("Account name: " + this.loggedName);
+        System.out.println("Account password: " + this.loggedPassword);
+        System.out.println("Account role: " + this.ROLE);
+    }
+
+    public void EditBusinessInformation(String op, String accName, String password) {
+        if (op.equals("Edit Business Information")) {
+            updateUser(loggedName, accName, password);
+        }
+    }
+
+    public void listOrders() throws FileNotFoundException, IOException {
+        loadOrders();  // Ensure the latest orders are loaded from the file
+        System.out.println("Order List:");
+        for (Order order : orders) {
+            System.out.println(order.getOrderDetails());
+        }
+    }
+
+    public void processOrder(String oNum, String op) throws IOException {
+        for (Order order : orders) {
+            if (order.orderNum.equals(oNum)) {
+                if ("Process".equals(op)) {
+                    order.setStatus("processed");
+                } else {
+                    throw new IllegalArgumentException("Invalid operation");
+                }
+                break;
+            }
+        }
+        rewriteFile("files/orders.txt", orders);  // Update the orders in the file
+    }
+
+    public boolean isOrderStatusUpdated(String oNum, String expectedStatus) {
+        for (Order order : orders) {
+            if (order.orderNum.equals(oNum)) {
+                return order.getStatus().equals(expectedStatus);
+            }
+        }
+        return false;
+    }
+
+    private void loadOrders() throws FileNotFoundException, IOException {
+        orders.clear();  // Clear existing orders before loading new ones
+        try (BufferedReader br = new BufferedReader(new FileReader("files/orders.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 5) {
+                    String orderNum = parts[0];
+                    String storeOwner = parts[1];
+                    String receiver = parts[2];
+                    String productName = parts[3];
+                    String status = parts[4];
+                    Order order = new Order(orderNum, storeOwner, receiver, productName, status);
+                    orders.add(order);
+                }
+            }
+        }
+    }
+    public void selectOrderByNumber(String orderNum) {
+        for (Order order : orders) {
+            if (order.orderNum.equals(orderNum)) {
+                currentOrder = order;
+                break;
+            }
+        }
+        if (currentOrder == null) {
+            throw new AssertionError("Order with number " + orderNum + " not found.");
+        }
+    }
+
+    public String getCurrentOrderStatus() {
+        if (currentOrder != null) {
+            System.out.println("Current order status: " + currentOrder.getStatus());
+            return currentOrder.getStatus();
+        } else {
+            return null;
+        }
+    }
+    public void returnToManagementPage() {
+        navigateTo("order management page");
+    }
+
+    public boolean isOnPage(String page) {
+        return currentPage.equals(page);
+    }
+
+	public void selectReport(String profitReports) throws FileNotFoundException, IOException {
+		// TODO Auto-generated method stub
+		if (profitReports.equals("Profit Reports")) {
+			 try (BufferedReader br = new BufferedReader(new FileReader("files/purchasedProducts.txt"))) {
+		            String line;
+		            double TotalSales = 0;
+		            double Profit = 0;
+		            int quantity = 0;
+		            while ((line = br.readLine()) != null) {
+		                String[] parts = line.split(",");
+		                if (parts.length == 3) {
+		                    String purchasedName = parts[0];
+		                    String quan = parts[1];
+		                    String purchasedPrice = parts[2];
+		                    TotalSales += (Double.parseDouble(purchasedPrice) * Double.parseDouble(quan));
+		                    quantity += Double.parseDouble(quan);
+		                }
+		            }
+		            Profit = TotalSales - quantity * 50;
+		            System.out.println("The profit is: " + Profit);
+		            reportGenerated = true;
+		        }
+		reportShown=true;
+		}
+		if (profitReports.equals("Generate Financial Report")) {
+			this.getSalesReport();
+		}
+		
+		
+		
+	}
+	public String getCurrentUsername() {
+		return loggedName;
+	}
 }
+
