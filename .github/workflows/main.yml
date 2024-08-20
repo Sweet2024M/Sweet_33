@@ -37,14 +37,25 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
+      - name: Install OWASP Dependency-Check
+        run: |
+          wget https://github.com/jeremylong/DependencyCheck/releases/download/v7.4.4/dependency-check-7.4.4-release.zip
+          unzip dependency-check-7.4.4-release.zip -d dependency-check
+          sudo ln -s $(pwd)/dependency-check/dependency-check/bin/dependency-check.sh /usr/local/bin/dependency-check
+
+      - name: Run OWASP Dependency-Check
+        run: dependency-check --project "MyProject" --out dependency-check-report --scan $(pwd)
+
       - name: Build Maven Project
         run: mvn --batch-mode clean install package -DskipTests
 
       - name: Run test cases
-        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+        run: mvn --batch-mode test jacoco:report -Dmaven.test.failure.ignore=true
 
-      - name: Build and analyze
+      - name: Build and analyze with SonarCloud
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B jacoco:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar jacoco:report -Dsonar.projectKey=Sweet2024M_Sweet_33
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+              -Dsonar.projectKey=Sweet2024M_Sweet_33 \
+              -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
