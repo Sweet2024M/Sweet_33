@@ -6,7 +6,7 @@ import java.util.*;
 public class User {
     private String currentUsername;
     private static final String FEEDBACK_FILE_PATH = "files\\feedback.txt";
-    private static final String OWNER_FILE_PATH ="files\\messagesToOwner.txt";
+    private static final String OWNER_FILE_PATH = "files\\messagesToOwner.txt";
     private static final String SUPPLIER_FILE_PATH = "files\\messagesToSupplier.txt";
     private static final String PRODUCTS_FILE_PATH = "files\\products.txt";
     private static final String ORDERS_FILE_PATH = "files\\orders.txt";
@@ -97,25 +97,15 @@ public class User {
             System.err.println("Error while saving the message: " + e.getMessage());
         }
     }
+
     public void purchaseProduct(String productName, int quantity) {
-//        if (currentUsername == null || currentUsername.isEmpty()) {
-//            System.out.println("No user is currently logged in.");
-//            return;
-//        }
+        if (app == null) {
+            System.out.println("The app object is not initialized.");
+            return;
+        }
         
-        MyApp app = null;
-String currentUsername;
-
-// Ensure that "app" is not null before accessing its fields or methods
-if (app != null) {
-    currentUsername = app.loggedName;
-} else {
-    // Handle the situation where "app" is null
-    System.out.println("The app object is not initialized.");
-    currentUsername = "Guest"; // Default value or alternative action
-}
+        String currentUsername = app.loggedName;
         
-
         // Step 1: Check if the product exists in the products file
         boolean productAvailable = false;
         try (BufferedReader productReader = new BufferedReader(new FileReader(PRODUCTS_FILE_PATH))) {
@@ -156,7 +146,6 @@ if (app != null) {
                         orderFound = true;
                     } else {
                         updatedOrders.append(line).append("\n");
-                        receivedAPurchasedDessert=true;
                     }
                 }
             }
@@ -178,7 +167,6 @@ if (app != null) {
             System.err.println("Error while processing the order: " + e.getMessage());
         }
     }
-
 
     public void printAllOrdersForCurrentUser() {
         if (currentUsername == null || currentUsername.isEmpty()) {
@@ -230,26 +218,6 @@ if (app != null) {
         }
     }
 
-    // Placeholder for isProductAvailable method
-    /*
-    public boolean isProductAvailable(String productName) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(PRODUCTS_FILE_PATH))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.equalsIgnoreCase(productName)) {
-                    return true;
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Error while checking product availability: " + e.getMessage());
-        }
-        return false;
-    }
-    */
-
-    
-    
-    
     public void PostAndSharePersonalDessert(String Recipes, String theComponents) {
         String filePath = "files\\recipes.txt";
         
@@ -261,14 +229,13 @@ if (app != null) {
             writer.write(recipeEntry);
             writer.newLine();
             System.out.println("Recipe added successfully!");
-            RecipeAddedSuccessfully=true;
+            RecipeAddedSuccessfully = true;
         } catch (IOException e) {
             System.out.println("An error occurred while writing to the file.");
             e.printStackTrace();
         }
     }
-    
-    
+
     public void SearchDessertRecipes(String recipesname) {
         String filePath = "files\\recipes.txt";
         
@@ -288,7 +255,7 @@ if (app != null) {
                     if (name.equalsIgnoreCase(recipesname.trim())) {
                         System.out.println("Recipe found: " + line);
                         found = true;
-                        RecipeFound=true;
+                        RecipeFound = true;
                         break;
                     }
                 }
@@ -301,8 +268,9 @@ if (app != null) {
         } catch (IOException e) {
             System.out.println("An error occurred while reading the file.");
             e.printStackTrace();
-        }}
-  
+        }
+    }
+
     public void filterRecipes(String ingredient) {
         String filePath = "files\\recipes.txt";
         
@@ -321,7 +289,6 @@ if (app != null) {
                     if (components.toLowerCase().contains(ingredient.toLowerCase())) {
                         System.out.println("Matching recipe: " + line);
                         found = true;
-                       
                     }
                 }
             }
@@ -335,6 +302,4 @@ if (app != null) {
             e.printStackTrace();
         }
     }
-
-    
 }
