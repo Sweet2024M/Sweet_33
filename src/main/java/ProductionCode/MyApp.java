@@ -1,3 +1,5 @@
+  package ProductionCode;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -6,18 +8,6 @@ import java.util.List;
 import ProductionCode.*;
 
 public class MyApp {
-
-    // Define constants for file paths with double backslashes
-    private static final String USERS_FILE_PATH = "files\\users.txt";
-    private static final String STORE_OWNERS_FILE_PATH = "files\\store_owners.txt";
-    private static final String MATERIAL_SUPPLIERS_FILE_PATH = "files\\material_suppliers.txt";
-    private static final String ADMIN_FILE_PATH = "files\\admin.txt";
-    private static final String PRODUCTS_FILE_PATH = "files\\products.txt";
-    private static final String ORDERS_FILE_PATH = "files\\orders.txt";
-    private static final String MESSAGES_TO_USERS_FILE_PATH = "files\\messagesToUsers.txt";
-    private static final String MESSAGES_TO_SUPPLIERS_FILE_PATH = "files\\messagesToSuppliers.txt";
-    private static final String MESSAGES_TO_OWNER_FILE_PATH = "files\\messagesToOwner.txt";
-    private static final String PURCHASED_PRODUCTS_FILE_PATH = "files\\purchasedProducts.txt";
 
     private String filePath = "";
     public boolean isUserLoggedIn;
@@ -52,22 +42,22 @@ public class MyApp {
     private String ROLE;
     private String loggedPassword;
     private ArrayList<Order> orders;
-    private String currentPage;
-    public boolean contentManagementPageOpen;
+	private String currentPage;
+    public boolean    contentManagementPageOpen ;
 
-    private Order currentOrder;
-    public boolean reportShown;
-
-    public ContentManagement contentmanagement;
-
-    public User user;
+	 private Order currentOrder;
+	public boolean reportShown;
+	
+	public ContentManagement contentmanagement;
+	
+	    public User user;
 
     public MyApp() throws FileNotFoundException, IOException {
         super();
         this.user = new User();
         this.user.setApp(this); 
         contentmanagement = new ContentManagement();
-        user = new User();
+        user =new User();
         this.users = new ArrayList<>();
         this.store_owners = new ArrayList<>();
         this.material_suppliers = new ArrayList<>();
@@ -75,10 +65,10 @@ public class MyApp {
         this.Products = new ArrayList<>();
         this.orders = new ArrayList<>();
 
-        loadData(USERS_FILE_PATH, "user");
-        loadData(STORE_OWNERS_FILE_PATH, "Store_owner");
-        loadData(MATERIAL_SUPPLIERS_FILE_PATH, "Material_supplier");
-        loadData(ADMIN_FILE_PATH, "Admin");
+        loadData("files/users.txt", "user");
+        loadData("files/store_owners.txt", "Store_owner");
+        loadData("files/material_suppliers.txt", "Material_supplier");
+        loadData("files/admin.txt", "Admin");
         loadProducts();
         loadOrders();
     }
@@ -115,19 +105,19 @@ public class MyApp {
     public void SignUp(String username, String password, String role) {
         switch (role) {
             case "user":
-                filePath = USERS_FILE_PATH;
+                filePath = "files/users.txt";
                 users.add(new User(username, password));
                 break;
             case "Store_owner":
-                filePath = STORE_OWNERS_FILE_PATH;
+                filePath = "files/store_owners.txt";
                 store_owners.add(new StoreOwner(username, password));
                 break;
             case "Material_supplier":
-                filePath = MATERIAL_SUPPLIERS_FILE_PATH;
+                filePath = "files/material_suppliers.txt";
                 material_suppliers.add(new MaterialSupplier(username, password));
                 break;
             case "Admin":
-                filePath = ADMIN_FILE_PATH;
+                filePath = "files/admin.txt";
                 admin.add(new Admin(username, password));
                 break;
         }
@@ -241,21 +231,10 @@ public class MyApp {
             System.out.println("Store Owner: " + storeOwner.getUsername());
         }
         for (MaterialSupplier supplier : material_suppliers) {
-            System.out.println("Material Supplier: " + supplier.getUsername());
+            System.out.println("Supplier: " + supplier.getUsername());
         }
-        for (Admin admin : admin) {
-            System.out.println("Admin: " + admin.getUsername());
-        }
+        isUserListVisible = true;
     }
-
-    // Additional methods for managing users, products, orders, etc. should be updated similarly.
-
-
-
-    
-    
-    
-    
 
     public void addUser(String username, String password, String role) {
         SignUp(username, password, role);
