@@ -1,11 +1,10 @@
-package ProductionCode;
+ package ProductionCode;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import ProductionCode.*;
 
 public class MyApp {
 
@@ -20,6 +19,12 @@ public class MyApp {
     private static final String MESSAGES_TO_SUPPLIERS_FILE_PATH = "files\\messagesToSuppliers.txt";
     private static final String MESSAGES_TO_OWNER_FILE_PATH = "files\\messagesToOwner.txt";
     private static final String PURCHASED_PRODUCTS_FILE_PATH = "files\\purchasedProducts.txt";
+
+    // Define constants for roles
+    private static final String ROLE_USER = "user";
+    private static final String ROLE_STORE_OWNER = "Store_owner";
+    private static final String ROLE_MATERIAL_SUPPLIER = "Material_supplier";
+    private static final String ROLE_ADMIN = "Admin";
 
     private String filePath = "";
     public boolean isUserLoggedIn;
@@ -77,10 +82,10 @@ public class MyApp {
         this.Products = new ArrayList<>();
         this.orders = new ArrayList<>();
 
-        loadData(USERS_FILE_PATH, "user");
-        loadData(STORE_OWNERS_FILE_PATH, "Store_owner");
-        loadData(MATERIAL_SUPPLIERS_FILE_PATH, "Material_supplier");
-        loadData(ADMIN_FILE_PATH, "Admin");
+        loadData(USERS_FILE_PATH, ROLE_USER);
+        loadData(STORE_OWNERS_FILE_PATH, ROLE_STORE_OWNER);
+        loadData(MATERIAL_SUPPLIERS_FILE_PATH, ROLE_MATERIAL_SUPPLIER);
+        loadData(ADMIN_FILE_PATH, ROLE_ADMIN);
         loadProducts();
         loadOrders();
     }
@@ -94,16 +99,16 @@ public class MyApp {
                     String name = parts[0];
                     String password = parts[1];
                     switch (role) {
-                        case "user":
+                        case ROLE_USER:
                             this.users.add(new User(name, password));
                             break;
-                        case "Store_owner":
+                        case ROLE_STORE_OWNER:
                             this.store_owners.add(new StoreOwner(name, password));
                             break;
-                        case "Material_supplier":
+                        case ROLE_MATERIAL_SUPPLIER:
                             this.material_suppliers.add(new MaterialSupplier(name, password));
                             break;
-                        case "Admin":
+                        case ROLE_ADMIN:
                             this.admin.add(new Admin(name, password));
                             break;
                     }
@@ -116,19 +121,19 @@ public class MyApp {
 
     public void SignUp(String username, String password, String role) {
         switch (role) {
-            case "user":
+            case ROLE_USER:
                 filePath = USERS_FILE_PATH;
                 users.add(new User(username, password));
                 break;
-            case "Store_owner":
+            case ROLE_STORE_OWNER:
                 filePath = STORE_OWNERS_FILE_PATH;
                 store_owners.add(new StoreOwner(username, password));
                 break;
-            case "Material_supplier":
+            case ROLE_MATERIAL_SUPPLIER:
                 filePath = MATERIAL_SUPPLIERS_FILE_PATH;
                 material_suppliers.add(new MaterialSupplier(username, password));
                 break;
-            case "Admin":
+            case ROLE_ADMIN:
                 filePath = ADMIN_FILE_PATH;
                 admin.add(new Admin(username, password));
                 break;
@@ -175,51 +180,51 @@ public class MyApp {
     }
 
     public void login(String username, String password, String role) {
-        if (role.equals("user")) {
+        if (role.equals(ROLE_USER)) {
             for (User a : users) {
                 if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                     isUserLoggedIn = true;
                     UserLoggedIn = true;
                     openUserDash();
                     loggedName = username;
-                    ROLE = "user";
+                    ROLE = ROLE_USER;
                     loggedPassword = password;
                     return;
                 }
             }
         }
 
-        if (role.equals("Store_owner")) {
+        if (role.equals(ROLE_STORE_OWNER)) {
             for (StoreOwner a : store_owners) {
                 if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                     isUserLoggedIn = true;
                     StoreOwnerLoggedIn = true;
                     loggedName = username;
-                    ROLE = "Store_owner";
+                    ROLE = ROLE_STORE_OWNER;
                     loggedPassword = password;
                     return;
                 }
             }
         }
-        if (role.equals("Material_supplier")) {
+        if (role.equals(ROLE_MATERIAL_SUPPLIER)) {
             for (MaterialSupplier a : material_suppliers) {
                 if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                     isUserLoggedIn = true;
                     MaterialSupplierLoggedIn = true;
                     loggedName = username;
-                    ROLE = "Material_supplier";
+                    ROLE = ROLE_MATERIAL_SUPPLIER;
                     loggedPassword = password;
                     return;
                 }
             }
         }
-        if (role.equals("Admin")) {
+        if (role.equals(ROLE_ADMIN)) {
             for (Admin a : admin) {
                 if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                     isUserLoggedIn = true;
                     AdminLoggedIn = true;
                     loggedName = username;
-                    ROLE = "Admin";
+                    ROLE = ROLE_ADMIN;
                     loggedPassword = password;
                     return;
                 }
@@ -240,24 +245,20 @@ public class MyApp {
             System.out.println("Username: " + user.getUsername());
         }
         for (StoreOwner storeOwner : store_owners) {
-            System.out.println("Store Owner: " + storeOwner.getUsername());
+            System.out.println("Store Owner Username: " + storeOwner.getUsername());
         }
-        for (MaterialSupplier supplier : material_suppliers) {
-            System.out.println("Material Supplier: " + supplier.getUsername());
+        for (MaterialSupplier materialSupplier : material_suppliers) {
+            System.out.println("Material Supplier Username: " + materialSupplier.getUsername());
         }
         for (Admin admin : admin) {
-            System.out.println("Admin: " + admin.getUsername());
+            System.out.println("Admin Username: " + admin.getUsername());
         }
     }
-
-    // Additional methods for managing users, products, orders, etc. should be updated similarly.
-
-
-
     
-    
-    
-    
+    // Other methods for updating and deleting users and products, handling orders, etc., would also use constants and organized file paths.
+
+}
+
 
     public void addUser(String username, String password, String role) {
         SignUp(username, password, role);
