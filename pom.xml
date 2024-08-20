@@ -26,7 +26,19 @@
 </dependency>
   
   </dependencies>
-
+<build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version> <!-- Make sure to use a compatible version -->
+                <configuration>
+                    <source>1.8</source> <!-- Set to 7, 8, 11, etc. based on your requirement -->
+                    <target>1.8</target> <!-- Set to 7, 8, 11, etc. based on your requirement -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 <properties>
   <sonar.organization>sweet2024m</sonar.organization>
   <sonar.host.url>https://sonarcloud.io</sonar.host.url>
