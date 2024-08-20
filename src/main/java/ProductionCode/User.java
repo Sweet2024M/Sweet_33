@@ -102,8 +102,20 @@ public class User {
 //            System.out.println("No user is currently logged in.");
 //            return;
 //        }
+        
         MyApp app = null;
-    	currentUsername=app.loggedName;
+String currentUsername;
+
+// Ensure that "app" is not null before accessing its fields or methods
+if (app != null) {
+    currentUsername = app.loggedName;
+} else {
+    // Handle the situation where "app" is null
+    System.out.println("The app object is not initialized.");
+    currentUsername = "Guest"; // Default value or alternative action
+}
+        
+
         // Step 1: Check if the product exists in the products file
         boolean productAvailable = false;
         try (BufferedReader productReader = new BufferedReader(new FileReader(PRODUCTS_FILE_PATH))) {
