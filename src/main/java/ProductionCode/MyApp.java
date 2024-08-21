@@ -22,7 +22,7 @@ public class MyApp {
     public boolean isSignedUp;
 
     public ArrayList<User> users;
-    public ArrayList<Admin> admin_list;
+     ArrayList<Admin> adminList;
     public ArrayList<StoreOwner> store_owners;
     public ArrayList<MaterialSupplier> material_suppliers;
     public ArrayList<Product> Products;
@@ -69,7 +69,7 @@ public class MyApp {
         this.users = new ArrayList<>();
         this.store_owners = new ArrayList<>();
         this.material_suppliers = new ArrayList<>();
-        this.admin_list = new ArrayList<>();
+        this.adminList = new ArrayList<>();
         this.Products = new ArrayList<>();
         this.orders = new ArrayList<>();
 
@@ -100,7 +100,7 @@ public class MyApp {
                             this.material_suppliers.add(new MaterialSupplier(name, password));
                             break;
                         case ADMIN:
-                            this.admin_list.add(new Admin(name, password));
+                            this.adminList.add(new Admin(name, password));
                             break;
                     }
                 }
@@ -126,7 +126,7 @@ public class MyApp {
                 break;
             case ADMIN:
                 filePath = ADMIN_FILE;
-                admin_list.add(new Admin(username, password));
+                adminList.add(new Admin(username, password));
                 break;
         }
 
@@ -203,14 +203,14 @@ public class MyApp {
                     isUserLoggedIn = true;
                     MaterialSupplierLoggedIn = true;
                     loggedName = username;
-                    ROLE = "Material_supplier";
+                    ROLE = MATERAIL_SUPPLIER;
                     loggedPassword = password;
                     return;
                 }
             }
         }
         if (role.equals("Admin")) {
-            for (Admin a : admin_list) {
+            for (Admin a : adminList) {
                 if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                     isUserLoggedIn = true;
                     AdminLoggedIn = true;
@@ -255,12 +255,12 @@ public class MyApp {
         users.removeIf(user -> user.getUsername().equals(username));
         store_owners.removeIf(storeOwner -> storeOwner.getUsername().equals(username));
         material_suppliers.removeIf(supplier -> supplier.getUsername().equals(username));
-        admin_list.removeIf(adminUser -> adminUser.getUsername().equals(username));
+        adminList.removeIf(adminUser -> adminUser.getUsername().equals(username));
 
         rewriteFile("files/users.txt", users);
         rewriteFile("files/store_owners.txt", store_owners);
         rewriteFile("files/material_suppliers.txt", material_suppliers);
-        rewriteFile("files/admin.txt", admin_list);
+        rewriteFile("files/admin.txt", adminList);
 
         System.out.println("User " + username + " deleted successfully!");
         String message = "User deleted successfully.";
@@ -305,11 +305,11 @@ public class MyApp {
                 return;
             }
         }
-        for (Admin adminUser : admin_list) {
+        for (Admin adminUser : adminList) {
             if (adminUser.getUsername().equals(oldUsername)) {
                 adminUser.setUsername(newUsername);
                 adminUser.setPassword(newPassword);
-                rewriteFile("files/admin.txt", admin_list);
+                rewriteFile("files/admin.txt", adminList);
                 System.out.println("Admin updated successfully!");
                 String message = "User updated successfully.";
                 updatedSuccessfully = true;
