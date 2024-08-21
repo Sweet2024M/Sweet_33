@@ -13,7 +13,7 @@ public class MyApp {
 	private static final String STORE_OWNER_FILE = "files/store_owners.txt";
 	private static final String MATERIAL_SUPPLIER_FILE = "files/material_suppliers.txt";
 	private static final String ADMIN_FILE = "files/admin.txt";
-	private static final String USER = "user";
+	private static final String USER_MAIN = "user";
 	private static final String STORE_OWNER = "Store_owner";
 	private static final String MATERAIL_SUPPLIER = "Material_supplier";
 	private static final String ADMIN = "Admin";
@@ -58,14 +58,14 @@ public class MyApp {
 	
 	public ContentManagement contentmanagement;
 	
-	    public User user1;
+	    public User user;
 
     public MyApp() throws FileNotFoundException, IOException {
         super();
-        this.user1 = new User();
-        this.user1.setApp(this); 
+        this.user = new User();
+        this.user.setApp(this); 
         contentmanagement = new ContentManagement();
-        user1 =new User();
+        user =new User();
         this.users = new ArrayList<>();
         this.store_owners = new ArrayList<>();
         this.material_suppliers = new ArrayList<>();
@@ -73,7 +73,7 @@ public class MyApp {
         this.Products = new ArrayList<>();
         this.orders = new ArrayList<>();
 
-        loadData(USER_FILE, USER);
+        loadData(USER_FILE, USER_MAIN);
         loadData(STORE_OWNER_FILE, STORE_OWNER);
         loadData(MATERIAL_SUPPLIER_FILE, MATERAIL_SUPPLIER);
         loadData(ADMIN_FILE, ADMIN);
