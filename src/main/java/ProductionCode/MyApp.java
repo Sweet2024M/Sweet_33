@@ -16,6 +16,7 @@ public class MyApp {
 	private static final String STORE_OWNER = "Store_owner";
 	private static final String MATERAIL_SUPPLIER = "Material_supplier";
 	private static final String ADMIN = "Admin";
+	private static final String USER_UPDATED = "User updated successfully.";
 	private String filePath = "";
     public boolean isUserLoggedIn;
     public boolean isSignedUp;
@@ -278,7 +279,7 @@ public class MyApp {
                 user.setPassword(newPassword);
                 rewriteFile(USER_FILE, users);
                 System.out.println("User updated successfully!");
-                String message = "User updated successfully.";
+                String message = USER_UPDATED;
                 updatedSuccessfully = true;
                 printMessage(message);
                 return;
@@ -670,4 +671,4 @@ public class MyApp {
 	public String getCurrentUsername() {
 		return loggedName;
 	}
-}
+
