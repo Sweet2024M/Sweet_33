@@ -46,7 +46,7 @@ public class MyApp {
     public boolean messageSentToUser;
     public boolean messageSentToSupplier;
     public static String loggedName;
-    private String ROLE;
+    private String role;
     private String loggedPassword;
     private ArrayList<Order> orders;
 	private String currentPage;
@@ -130,6 +130,8 @@ public class MyApp {
                 filePath = ADMIN_FILE;
                 adminList.add(new Admin(username, password));
                 break;
+                
+                default:break;
         }
 
         updateFile(filePath, username, password, false);
@@ -172,15 +174,15 @@ public class MyApp {
         }
     }
 
-    public void login(String username, String password, String role) {
-        if (role.equals("user")) {
+    public  void login(String username, String password, String role) {
+        if (role.equals(USER_MAIN)) {
             for (User a : users) {
                 if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                     isUserLoggedIn = true;
                     UserLoggedIn = true;
                     openUserDash();
                     loggedName = username;
-                    ROLE = USER_MAIN;
+                   this.role = USER_MAIN;
                     loggedPassword = password;
                     return;
                 }
@@ -193,7 +195,7 @@ public class MyApp {
                     isUserLoggedIn = true;
                     StoreOwnerLoggedIn = true;
                     loggedName = username;
-                    ROLE = STORE_OWNER;
+                    this.role = STORE_OWNER;
                     loggedPassword = password;
                     return;
                 }
@@ -205,7 +207,7 @@ public class MyApp {
                     isUserLoggedIn = true;
                     MaterialSupplierLoggedIn = true;
                     loggedName = username;
-                    ROLE = MATERAIL_SUPPLIER;
+                    this.role = MATERAIL_SUPPLIER;
                     loggedPassword = password;
                     return;
                 }
@@ -217,7 +219,7 @@ public class MyApp {
                     isUserLoggedIn = true;
                     AdminLoggedIn = true;
                     loggedName = username;
-                    ROLE = ADMIN;
+                    this.role = ADMIN;
                     loggedPassword = password;
                     return;
                 }
@@ -549,7 +551,7 @@ public class MyApp {
     public void showAccountDetails() {
         System.out.println("Account name: " + this.loggedName);
         System.out.println("Account password: " + this.loggedPassword);
-        System.out.println("Account role: " + this.ROLE);
+        System.out.println("Account role: " + this.role);
     }
 
     public void EditBusinessInformation(String op, String accName, String password) {
