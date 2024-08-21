@@ -58,14 +58,14 @@ public class MyApp {
 	
 	public ContentManagement contentmanagement;
 	
-	    public User user;
+	    public User user1;
 
     public MyApp() throws FileNotFoundException, IOException {
         super();
-        this.user = new User();
-        this.user.setApp(this); 
+        this.user1 = new User();
+        this.user1.setApp(this); 
         contentmanagement = new ContentManagement();
-        user =new User();
+        user1 =new User();
         this.users = new ArrayList<>();
         this.store_owners = new ArrayList<>();
         this.material_suppliers = new ArrayList<>();
