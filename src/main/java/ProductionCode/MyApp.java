@@ -174,58 +174,57 @@ public class MyApp {
         }
     }
 
-    public  void login(String username, String password, String role) {
-        if (role.equals(USER_MAIN)) {
-            for (User a : users) {
-                if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
-                    isUserLoggedIn = true;
+    public void login(String username, String password, String role) {
+        switch (role) {
+            case USER_MAIN:
+                authenticateAndSetUser(username, password, users, USER_MAIN, () -> {
                     UserLoggedIn = true;
                     openUserDash();
-                    loggedName = username;
-                   this.role = USER_MAIN;
-                    loggedPassword = password;
-                    return;
-                }
-            }
+                });
+                break;
+            case STORE_OWNER:
+                authenticateAndSetUser(username, password, store_owners, STORE_OWNER, () -> StoreOwnerLoggedIn = true);
+                break;
+            case MATERAIL_SUPPLIER:
+                authenticateAndSetUser(username, password, material_suppliers, MATERAIL_SUPPLIER, () -> MaterialSupplierLoggedIn = true);
+                break;
+            case ADMIN:
+                authenticateAndSetUser(username, password, adminList, ADMIN, () -> AdminLoggedIn = true);
+                break;
+            default:
+                System.out.println("Invalid role specified.");
         }
+    }
 
-        if (role.equals(STORE_OWNER)) {
-            for (StoreOwner a : store_owners) {
-                if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
-                    isUserLoggedIn = true;
-                    StoreOwnerLoggedIn = true;
-                    loggedName = username;
-                    this.role = STORE_OWNER;
-                    loggedPassword = password;
-                    return;
-                }
+    private void authenticateAndSetUser(String username, String password, ArrayList<?> accountList, String role, Runnable setRoleLoggedIn) {
+        for (Object account : accountList) {
+            if (isValidUser(account, username, password)) {
+                isUserLoggedIn = true;
+                loggedName = username;
+                this.role = role;
+                loggedPassword = password;
+                setRoleLoggedIn.run();
+                return;
             }
         }
-        if (role.equals(MATERAIL_SUPPLIER)) {
-            for (MaterialSupplier a : material_suppliers) {
-                if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
-                    isUserLoggedIn = true;
-                    MaterialSupplierLoggedIn = true;
-                    loggedName = username;
-                    this.role = MATERAIL_SUPPLIER;
-                    loggedPassword = password;
-                    return;
-                }
-            }
-        }
-        if (role.equals(ADMIN)) {
-            for (Admin a : adminList) {
-                if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
-                    isUserLoggedIn = true;
-                    AdminLoggedIn = true;
-                    loggedName = username;
-                    this.role = ADMIN;
-                    loggedPassword = password;
-                    return;
-                }
-            }
-        }
+        System.out.println("Invalid username or password.");
+    }
 
+    private boolean isValidUser(Object account, String username, String password) {
+        if (account instanceof User) {
+            User user = (User) account;
+            return user.getUsername().equals(username) && user.getPassword().equals(password);
+        } else if (account instanceof StoreOwner) {
+            StoreOwner storeOwner = (StoreOwner) account;
+            return storeOwner.getUsername().equals(username) && storeOwner.getPassword().equals(password);
+        } else if (account instanceof MaterialSupplier) {
+            MaterialSupplier materialSupplier = (MaterialSupplier) account;
+            return materialSupplier.getUsername().equals(username) && materialSupplier.getPassword().equals(password);
+        } else if (account instanceof Admin) {
+            Admin admin = (Admin) account;
+            return admin.getUsername().equals(username) && admin.getPassword().equals(password);
+        }
+        return false;
     }
 
     public void openUserDash() {
