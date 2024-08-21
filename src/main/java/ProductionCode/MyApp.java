@@ -309,7 +309,7 @@ public class MyApp {
             if (adminUser.getUsername().equals(oldUsername)) {
                 adminUser.setUsername(newUsername);
                 adminUser.setPassword(newPassword);
-                rewriteFile("files/admin.txt", adminList);
+                rewriteFile(ADMIN_FILE, adminList);
                 System.out.println("Admin updated successfully!");
                 String message = "User updated successfully.";
                 updatedSuccessfully = true;
