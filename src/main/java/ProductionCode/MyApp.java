@@ -38,7 +38,7 @@ public class MyApp {
     public boolean addedSuccessfully;
     public boolean updatedSuccessfully;
     public boolean deletedSuccessfully;
-    private String ownerName;
+ 
     public boolean updateMessage;
     public boolean deletedProductSuccessfully;
     public boolean reportGenerated;
@@ -212,7 +212,7 @@ public class MyApp {
 
     private boolean isValidUser(Object account, String username, String password) {
         if (account instanceof User) {
-            User user = (User) account;
+            User localUser = (User) account;
             return user.getUsername().equals(username) && user.getPassword().equals(password);
         } else if (account instanceof StoreOwner) {
             StoreOwner storeOwner = (StoreOwner) account;
@@ -235,7 +235,7 @@ public class MyApp {
 
     public void viewAllUsers() {
         System.out.println("List of all users:");
-        for (User user : users) {
+        for (User locaUser : users) {
             System.out.println("Username: " + user.getUsername());
         }
         for (StoreOwner storeOwner : store_owners) {
@@ -255,7 +255,7 @@ public class MyApp {
     }
 
     public void deleteUser(String username) {
-        users.removeIf(user -> user.getUsername().equals(username));
+        users.removeIf(localUser -> user.getUsername().equals(username));
         store_owners.removeIf(storeOwner -> storeOwner.getUsername().equals(username));
         material_suppliers.removeIf(supplier -> supplier.getUsername().equals(username));
         adminList.removeIf(adminUser -> adminUser.getUsername().equals(username));
@@ -272,10 +272,10 @@ public class MyApp {
     }
 
     public void updateUser(String oldUsername, String newUsername, String newPassword) {
-        for (User user : users) {
-            if (user.getUsername().equals(oldUsername)) {
-                user.setUsername(newUsername);
-                user.setPassword(newPassword);
+        for (User localUser : users) {
+            if (localUser.getUsername().equals(oldUsername)) {
+                localUser.setUsername(newUsername);
+                localUser.setPassword(newPassword);
                 rewriteFile(USER_FILE, users);
                 System.out.println("User updated successfully!");
                 String message = "User updated successfully.";

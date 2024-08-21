@@ -77,7 +77,7 @@ public class ContentManagement {
             List<String> responses = readLinesFromFile(RESPONSE_FEEDBACK_FILE_PATH);
             responses.add(response);
             writeLinesToFile(RESPONSE_FEEDBACK_FILE_PATH, responses);
-            responseMessage = "Response sent successfully.";
+           
         } else {
             System.out.println("Feedback with ID " + id + " not found.");
         }
