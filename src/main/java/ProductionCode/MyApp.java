@@ -178,7 +178,7 @@ public class MyApp {
                     UserLoggedIn = true;
                     openUserDash();
                     loggedName = username;
-                    ROLE = "user";
+                    ROLE = USER_MAIN;
                     loggedPassword = password;
                     return;
                 }
@@ -197,7 +197,7 @@ public class MyApp {
                 }
             }
         }
-        if (role.equals("Material_supplier")) {
+        if (role.equals(MATERAIL_SUPPLIER)) {
             for (MaterialSupplier a : material_suppliers) {
                 if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                     isUserLoggedIn = true;
@@ -209,13 +209,13 @@ public class MyApp {
                 }
             }
         }
-        if (role.equals("Admin")) {
+        if (role.equals(ADMIN)) {
             for (Admin a : adminList) {
                 if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                     isUserLoggedIn = true;
                     AdminLoggedIn = true;
                     loggedName = username;
-                    ROLE = "Admin";
+                    ROLE = ADMIN;
                     loggedPassword = password;
                     return;
                 }
@@ -257,10 +257,10 @@ public class MyApp {
         material_suppliers.removeIf(supplier -> supplier.getUsername().equals(username));
         adminList.removeIf(adminUser -> adminUser.getUsername().equals(username));
 
-        rewriteFile("files/users.txt", users);
-        rewriteFile("files/store_owners.txt", store_owners);
-        rewriteFile("files/material_suppliers.txt", material_suppliers);
-        rewriteFile("files/admin.txt", adminList);
+        rewriteFile(USER_FILE, users);
+        rewriteFile(STORE_OWNER_FILE, store_owners);
+        rewriteFile(MATERIAL_SUPPLIER_FILE, material_suppliers);
+        rewriteFile(ADMIN, adminList);
 
         System.out.println("User " + username + " deleted successfully!");
         String message = "User deleted successfully.";
@@ -273,7 +273,7 @@ public class MyApp {
             if (user.getUsername().equals(oldUsername)) {
                 user.setUsername(newUsername);
                 user.setPassword(newPassword);
-                rewriteFile("files/users.txt", users);
+                rewriteFile(USER_FILE, users);
                 System.out.println("User updated successfully!");
                 String message = "User updated successfully.";
                 updatedSuccessfully = true;
@@ -285,7 +285,7 @@ public class MyApp {
             if (storeOwner.getUsername().equals(oldUsername)) {
                 storeOwner.setUsername(newUsername);
                 storeOwner.setPassword(newPassword);
-                rewriteFile("files/store_owners.txt", store_owners);
+                rewriteFile(STORE_OWNER, store_owners);
                 System.out.println("Store Owner updated successfully!");
                 String message = "User updated successfully.";
                 updatedSuccessfully = true;
@@ -297,7 +297,7 @@ public class MyApp {
             if (supplier.getUsername().equals(oldUsername)) {
                 supplier.setUsername(newUsername);
                 supplier.setPassword(newPassword);
-                rewriteFile("files/material_suppliers.txt", material_suppliers);
+                rewriteFile(MATERIAL_SUPPLIER_FILE, material_suppliers);
                 System.out.println("Material Supplier updated successfully!");
                 String message = "User updated successfully.";
                 updatedSuccessfully = true;
