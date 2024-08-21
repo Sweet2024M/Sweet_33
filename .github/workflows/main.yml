@@ -30,6 +30,11 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Build Maven Project
+        run: mvn --batch-mode clean install package -DskipTests
+
+      - name: Run test cases
+        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
 
      
       - name: Cache SonarCloud packages
@@ -39,11 +44,7 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      - name: Build Maven Project
-        run: mvn --batch-mode clean install package -DskipTests
-
-      - name: Run test cases
-        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+      
 
      
       - name: Build and analyze
