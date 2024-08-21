@@ -8,9 +8,12 @@ import java.util.List;
 import ProductionCode.*;
 
 public class MyApp {
-	
+
     private static final String USER_FILE = "files/users.txt";
-    private String filePath = "";
+	private static final String STORE_OWNER_FILE = "files/store_owners.txt";
+	private static final String MATERIAL_SUPPLIER_FILE = "files/material_suppliers.txt";
+	private static final String ADMIN_FILE = "files/admin.txt";
+	private String filePath = "";
     public boolean isUserLoggedIn;
     public boolean isSignedUp;
 
@@ -67,9 +70,9 @@ public class MyApp {
         this.orders = new ArrayList<>();
 
         loadData(USER_FILE, "user");
-        loadData("files/store_owners.txt", "Store_owner");
-        loadData("files/material_suppliers.txt", "Material_supplier");
-        loadData("files/admin.txt", "Admin");
+        loadData(STORE_OWNER_FILE, "Store_owner");
+        loadData(MATERIAL_SUPPLIER_FILE, "Material_supplier");
+        loadData(ADMIN_FILE, "Admin");
         loadProducts();
         loadOrders();
     }
@@ -106,19 +109,19 @@ public class MyApp {
     public void SignUp(String username, String password, String role) {
         switch (role) {
             case "user":
-                filePath = "files/users.txt";
+                filePath = USER_FILE;
                 users.add(new User(username, password));
                 break;
             case "Store_owner":
-                filePath = "files/store_owners.txt";
+                filePath = STORE_OWNER_FILE;
                 store_owners.add(new StoreOwner(username, password));
                 break;
             case "Material_supplier":
-                filePath = "files/material_suppliers.txt";
+                filePath = MATERIAL_SUPPLIER_FILE;
                 material_suppliers.add(new MaterialSupplier(username, password));
                 break;
             case "Admin":
-                filePath = "files/admin.txt";
+                filePath = ADMIN_FILE;
                 admin.add(new Admin(username, password));
                 break;
         }
@@ -661,3 +664,4 @@ public class MyApp {
 		return loggedName;
 	}
 }
+
