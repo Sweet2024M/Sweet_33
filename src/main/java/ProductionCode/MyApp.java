@@ -9,10 +9,14 @@ import ProductionCode.*;
 
 public class MyApp {
 
-    private static final String USER_FILE = "files/users.txt";
+   private static final String USER_FILE = "files/users.txt";
 	private static final String STORE_OWNER_FILE = "files/store_owners.txt";
 	private static final String MATERIAL_SUPPLIER_FILE = "files/material_suppliers.txt";
 	private static final String ADMIN_FILE = "files/admin.txt";
+	private static final String USER = "user";
+	private static final String STORE_OWNER = "Store_owner";
+	private static final String MATERAIL_SUPPLIER = "Material_supplier";
+	private static final String ADMIN = "Admin";
 	private String filePath = "";
     public boolean isUserLoggedIn;
     public boolean isSignedUp;
@@ -69,13 +73,14 @@ public class MyApp {
         this.Products = new ArrayList<>();
         this.orders = new ArrayList<>();
 
-        loadData(USER_FILE, "user");
-        loadData(STORE_OWNER_FILE, "Store_owner");
-        loadData(MATERIAL_SUPPLIER_FILE, "Material_supplier");
-        loadData(ADMIN_FILE, "Admin");
+        loadData(USER_FILE, USER);
+        loadData(STORE_OWNER_FILE, STORE_OWNER);
+        loadData(MATERIAL_SUPPLIER_FILE, MATERAIL_SUPPLIER);
+        loadData(ADMIN_FILE, ADMIN);
         loadProducts();
         loadOrders();
     }
+
 
     private void loadData(String fileName, String role) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
