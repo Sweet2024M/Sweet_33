@@ -1,27 +1,30 @@
-  package ProductionCode;
+package ProductionCode;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class MyApp {
 
+    private static final Logger logger = Logger.getLogger(MyApp.class.getName());
+
     private static final String USER_FILE = "files/users.txt";
-	private static final String STORE_OWNER_FILE = "files/store_owners.txt";
-	private static final String MATERIAL_SUPPLIER_FILE = "files/material_suppliers.txt";
-	private static final String ADMIN_FILE = "files/admin.txt";
-	private static final String USER_MAIN = "user";
-	private static final String STORE_OWNER = "Store_owner";
-	private static final String MATERAIL_SUPPLIER = "Material_supplier";
-	private static final String ADMIN = "Admin";
-	private String filePath = "";
+    private static final String STORE_OWNER_FILE = "files/store_owners.txt";
+    private static final String MATERIAL_SUPPLIER_FILE = "files/material_suppliers.txt";
+    private static final String ADMIN_FILE = "files/admin.txt";
+    private static final String USER_MAIN = "user";
+    private static final String STORE_OWNER = "Store_owner";
+    private static final String MATERAIL_SUPPLIER = "Material_supplier";
+    private static final String ADMIN = "Admin";
+    private String filePath = "";
     public boolean isUserLoggedIn;
     public boolean isSignedUp;
 
     public ArrayList<User> users;
-     ArrayList<Admin> adminList;
+    ArrayList<Admin> adminList;
     public ArrayList<StoreOwner> store_owners;
     public ArrayList<MaterialSupplier> material_suppliers;
     public ArrayList<Product> Products;
@@ -38,7 +41,7 @@ public class MyApp {
     public boolean addedSuccessfully;
     public boolean updatedSuccessfully;
     public boolean deletedSuccessfully;
- 
+
     public boolean updateMessage;
     public boolean deletedProductSuccessfully;
     public boolean reportGenerated;
@@ -49,22 +52,22 @@ public class MyApp {
     private String role;
     private String loggedPassword;
     private ArrayList<Order> orders;
-	private String currentPage;
-    public boolean    contentManagementPageOpen ;
+    private String currentPage;
+    public boolean contentManagementPageOpen;
 
-	 private Order currentOrder;
-	public boolean reportShown;
-	
-	public ContentManagement contentmanagement;
-	
-	    public User user;
+    private Order currentOrder;
+    public boolean reportShown;
+
+    public ContentManagement contentmanagement;
+
+    public User user;
 
     public MyApp() throws FileNotFoundException, IOException {
         super();
         this.user = new User();
-        this.user.setApp(this); 
+        this.user.setApp(this);
         contentmanagement = new ContentManagement();
-        user =new User();
+        user = new User();
         this.users = new ArrayList<>();
         this.store_owners = new ArrayList<>();
         this.material_suppliers = new ArrayList<>();
@@ -101,9 +104,9 @@ public class MyApp {
                         case ADMIN:
                             this.adminList.add(new Admin(name, password));
                             break;
-                            
+
                         default:
-                        break;
+                            break;
                     }
                 }
             }
@@ -130,13 +133,14 @@ public class MyApp {
                 filePath = ADMIN_FILE;
                 adminList.add(new Admin(username, password));
                 break;
-                
-                default:break;
+
+            default:
+                break;
         }
 
         updateFile(filePath, username, password, false);
         isSignedUp = true;
-        System.out.println(role + " added successfully!");
+        logger.info(role + " added successfully!");
         isSigndUp = true;
     }
 
@@ -192,7 +196,7 @@ public class MyApp {
                 authenticateAndSetUser(username, password, adminList, ADMIN, () -> AdminLoggedIn = true);
                 break;
             default:
-                System.out.println("Invalid role specified.");
+                logger.warning("Invalid role specified.");
         }
     }
 
@@ -207,7 +211,7 @@ public class MyApp {
                 return;
             }
         }
-        System.out.println("Invalid username or password.");
+        logger.warning("Invalid username or password.");
     }
 
     private boolean isValidUser(Object account, String username, String password) {
@@ -228,21 +232,22 @@ public class MyApp {
     }
 
     public void openUserDash() {
-        if (!UserLoggedIn) return;
+        if (!UserLoggedIn)
+            return;
         userDashOpen = true;
-        System.out.println("Welcome user");
+        logger.info("Welcome user");
     }
 
     public void viewAllUsers() {
-        System.out.println("List of all users:");
+        logger.info("List of all users:");
         for (User locaUser : users) {
-            System.out.println("Username: " + user.getUsername());
+            logger.info("Username: " + user.getUsername());
         }
         for (StoreOwner storeOwner : store_owners) {
-            System.out.println("Store Owner: " + storeOwner.getUsername());
+            logger.info("Store Owner: " + storeOwner.getUsername());
         }
         for (MaterialSupplier supplier : material_suppliers) {
-            System.out.println("Supplier: " + supplier.getUsername());
+            logger.info("Supplier: " + supplier.getUsername());
         }
         isUserListVisible = true;
     }
@@ -265,7 +270,7 @@ public class MyApp {
         rewriteFile(MATERIAL_SUPPLIER_FILE, material_suppliers);
         rewriteFile(ADMIN, adminList);
 
-        System.out.println("User " + username + " deleted successfully!");
+        logger.info("User " + username + " deleted successfully!");
         String message = "User deleted successfully.";
         deletedSuccessfully = true;
         printMessage(message);
@@ -277,7 +282,7 @@ public class MyApp {
                 localUser.setUsername(newUsername);
                 localUser.setPassword(newPassword);
                 rewriteFile(USER_FILE, users);
-                System.out.println("User updated successfully!");
+                logger.info("User updated successfully!");
                 String message = "User updated successfully.";
                 updatedSuccessfully = true;
                 printMessage(message);
@@ -289,7 +294,7 @@ public class MyApp {
                 storeOwner.setUsername(newUsername);
                 storeOwner.setPassword(newPassword);
                 rewriteFile(STORE_OWNER, store_owners);
-                System.out.println("Store Owner updated successfully!");
+                logger.info("Store Owner updated successfully!");
                 String message = "User updated successfully.";
                 updatedSuccessfully = true;
                 printMessage(message);
@@ -301,7 +306,7 @@ public class MyApp {
                 supplier.setUsername(newUsername);
                 supplier.setPassword(newPassword);
                 rewriteFile(MATERIAL_SUPPLIER_FILE, material_suppliers);
-                System.out.println("Material Supplier updated successfully!");
+                logger.info("Material Supplier updated successfully!");
                 String message = "User updated successfully.";
                 updatedSuccessfully = true;
                 printMessage(message);
@@ -313,7 +318,7 @@ public class MyApp {
                 adminUser.setUsername(newUsername);
                 adminUser.setPassword(newPassword);
                 rewriteFile(ADMIN_FILE, adminList);
-                System.out.println("Admin updated successfully!");
+                logger.info("Admin updated successfully!");
                 String message = "User updated successfully.";
                 updatedSuccessfully = true;
                 printMessage(message);
@@ -321,7 +326,7 @@ public class MyApp {
             }
         }
 
-        System.out.println("User " + oldUsername + " not found.");
+        logger.warning("User " + oldUsername + " not found.");
     }
 
     public void AdminDashboardOptiones(String option) {
@@ -329,44 +334,42 @@ public class MyApp {
             case "1":
                 userManagementPageOpen = true;
 
-                System.out.println("User Management Page is now open.");
-                System.out.println("Options:");
-                System.out.println("1. View All Users");
-                System.out.println("2. Add User");
-                System.out.println("3. Delete User");
-                System.out.println("4. Update User");
-                System.out.println("5. Back to Admin Dashboard");
+                logger.info("User Management Page is now open.");
+                logger.info("Options:");
+                logger.info("1. View All Users");
+                logger.info("2. Add User");
+                logger.info("3. Delete User");
+                logger.info("4. Update User");
+                logger.info("5. Back to Admin Dashboard");
 
                 break;
             case "2":
                 MonitorAndReport();
                 break;
             case "3":
-            	   contentManagementPageOpen = true;
-            	   
-            	   System.out.println("1. View Recipe");
-                   System.out.println("2. Delete Recipe");
-                   System.out.println("3. View feedback");
-                   System.out.println("4. Respond feedback");
-                   System.out.println("5. Delete feedback");
-            	   break;
+                contentManagementPageOpen = true;
+
+                logger.info("1. View Recipe");
+                logger.info("2. Delete Recipe");
+                logger.info("3. View feedback");
+                logger.info("4. Respond feedback");
+                logger.info("5. Delete feedback");
+                break;
         }
     }
 
     public void AdminDashboardpage() {
         adminDashbordOpen = true;
-        System.out.println("Admin Dashboard is now open.");
-        System.out.println("Available Tasks:");
-        System.out.println("1. Manage User Accounts");
-        System.out.println("2. Monitor and Report");
-        System.out.println("3. Content Management");
+        logger.info("Admin Dashboard is now open.");
+        logger.info("Available Tasks:");
+        logger.info("1. Manage User Accounts");
+        logger.info("2. Monitor and Report");
+        logger.info("3. Content Management");
     }
 
     public void printMessage(String message) {
-        System.out.println(message);
+        logger.info(message);
     }
-
-   
 
     private void MonitorAndReport() {
         // TODO Auto-generated method stub
@@ -374,7 +377,7 @@ public class MyApp {
     }
 
     public void navigateTo(String page) {
-        if (StoreOwnerLoggedIn || MaterialSupplierLoggedIn||AdminLoggedIn) {
+        if (StoreOwnerLoggedIn || MaterialSupplierLoggedIn || AdminLoggedIn) {
             currentPage = page;
         } else {
             throw new AssertionError("User not logged in or invalid user role.");
@@ -401,7 +404,7 @@ public class MyApp {
                 }
             }
             Files.write(Paths.get("files/products.txt"), updatedLines);
-            System.out.println("File has been updated successfully.");
+            logger.info("File has been updated successfully.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -455,9 +458,9 @@ public class MyApp {
                 }
             }
             Profit = TotalSales - quantity * 50;
-            System.out.println("The Total number of sales: " + quantity);
-            System.out.println("The total sales is: " + TotalSales);
-            System.out.println("The profit is: " + Profit);
+            logger.info("The Total number of sales: " + quantity);
+            logger.info("The total sales is: " + TotalSales);
+            logger.info("The profit is: " + Profit);
             reportGenerated = true;
         }
     }
@@ -478,8 +481,8 @@ public class MyApp {
                     }
                 }
             }
-            System.out.println("The highest number of sales: " + quantity);
-            System.out.println("The best selling product is: " + name);
+            logger.info("The highest number of sales: " + quantity);
+            logger.info("The best selling product is: " + name);
         }
     }
 
@@ -497,7 +500,7 @@ public class MyApp {
                         newPrice = Double.parseDouble(price) * 35 / 100;
                         deleteProduct(productname);
                         addProduct(productname, "" + newPrice, exp);
-                        System.out.println("The discount at " + productname + ": Original price = " + price + ", Discounted price = " + newPrice);
+                        logger.info("The discount at " + productname + ": Original price = " + price + ", Discounted price = " + newPrice);
                         discountMessagepos = true;
                     }
                 }
@@ -512,7 +515,7 @@ public class MyApp {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path, true))) {
             writer.write(content);
             writer.newLine();
-            System.out.println("Message sent successfully.");
+            logger.info("Message sent successfully.");
             messageSentToUser = true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -526,7 +529,7 @@ public class MyApp {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path, true))) {
             writer.write(content);
             writer.newLine();
-            System.out.println("Message sent successfully.");
+            logger.info("Message sent successfully.");
             messageSentToSupplier = true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -540,7 +543,7 @@ public class MyApp {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path, true))) {
             writer.write(content);
             writer.newLine();
-            System.out.println("Message sent successfully.");
+            logger.info("Message sent successfully.");
             messageSentToSupplier = true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -548,9 +551,9 @@ public class MyApp {
     }
 
     public void showAccountDetails() {
-        System.out.println("Account name: " + this.loggedName);
-        System.out.println("Account password: " + this.loggedPassword);
-        System.out.println("Account role: " + this.role);
+        logger.info("Account name: " + this.loggedName);
+        logger.info("Account password: " + this.loggedPassword);
+        logger.info("Account role: " + this.role);
     }
 
     public void EditBusinessInformation(String op, String accName, String password) {
@@ -561,9 +564,9 @@ public class MyApp {
 
     public void listOrders() throws FileNotFoundException, IOException {
         loadOrders();  // Ensure the latest orders are loaded from the file
-        System.out.println("Order List:");
+        logger.info("Order List:");
         for (Order order : orders) {
-            System.out.println(order.getOrderDetails());
+            logger.info(order.getOrderDetails());
         }
     }
 
@@ -608,6 +611,7 @@ public class MyApp {
             }
         }
     }
+
     public void selectOrderByNumber(String orderNum) {
         for (Order order : orders) {
             if (order.orderNum.equals(orderNum)) {
@@ -622,12 +626,13 @@ public class MyApp {
 
     public String getCurrentOrderStatus() {
         if (currentOrder != null) {
-            System.out.println("Current order status: " + currentOrder.getStatus());
+            logger.info("Current order status: " + currentOrder.getStatus());
             return currentOrder.getStatus();
         } else {
             return null;
         }
     }
+
     public void returnToManagementPage() {
         navigateTo("order management page");
     }
@@ -636,38 +641,37 @@ public class MyApp {
         return currentPage.equals(page);
     }
 
-	public void selectReport(String profitReports) throws FileNotFoundException, IOException {
-		// TODO Auto-generated method stub
-		if (profitReports.equals("Profit Reports")) {
-			 try (BufferedReader br = new BufferedReader(new FileReader("files/purchasedProducts.txt"))) {
-		            String line;
-		            double TotalSales = 0;
-		            double Profit = 0;
-		            int quantity = 0;
-		            while ((line = br.readLine()) != null) {
-		                String[] parts = line.split(",");
-		                if (parts.length == 3) {
-		                    String purchasedName = parts[0];
-		                    String quan = parts[1];
-		                    String purchasedPrice = parts[2];
-		                    TotalSales += (Double.parseDouble(purchasedPrice) * Double.parseDouble(quan));
-		                    quantity += Double.parseDouble(quan);
-		                }
-		            }
-		            Profit = TotalSales - quantity * 50;
-		            System.out.println("The profit is: " + Profit);
-		            reportGenerated = true;
-		        }
-		reportShown=true;
-		}
-		if (profitReports.equals("Generate Financial Report")) {
-			this.getSalesReport();
-		}
-		
-		
-		
-	}
-	public String getCurrentUsername() {
-		return loggedName;
-	}
+    public void selectReport(String profitReports) throws FileNotFoundException, IOException {
+        // TODO Auto-generated method stub
+        if (profitReports.equals("Profit Reports")) {
+            try (BufferedReader br = new BufferedReader(new FileReader("files/purchasedProducts.txt"))) {
+                String line;
+                double TotalSales = 0;
+                double Profit = 0;
+                int quantity = 0;
+                while ((line = br.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    if (parts.length == 3) {
+                        String purchasedName = parts[0];
+                        String quan = parts[1];
+                        String purchasedPrice = parts[2];
+                        TotalSales += (Double.parseDouble(purchasedPrice) * Double.parseDouble(quan));
+                        quantity += Double.parseDouble(quan);
+                    }
+                }
+                Profit = TotalSales - quantity * 50;
+                logger.info("The profit is: " + Profit);
+                reportGenerated = true;
+            }
+            reportShown = true;
+        }
+        if (profitReports.equals("Generate Financial Report")) {
+            this.getSalesReport();
+        }
+
+    }
+
+    public String getCurrentUsername() {
+        return loggedName;
+    }
 }
