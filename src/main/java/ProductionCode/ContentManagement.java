@@ -11,9 +11,9 @@ public class ContentManagement {
     private static final String FEEDBACK_FILE_PATH = "files/feedback.txt";
     private static final String RESPONSE_FEEDBACK_FILE_PATH = "files/responseFeedback.txt";
 
-    public String feedbackDeleteMessage;
-    public String responseMessage;
-    public String RecipeDeletedMessage;
+     String feedbackDeleteMessage;
+     String responseMessage;
+     String RecipeDeletedMessage;
 
     // Helper method to read lines from a file
     private List<String> readLinesFromFile(String filePath) {
