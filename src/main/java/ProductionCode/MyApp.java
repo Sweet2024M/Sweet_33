@@ -58,14 +58,14 @@ public class MyApp {
 	
 	public ContentManagement contentmanagement;
 	
-	    public User user;
+	    public User mainuser;
 
     public MyApp() throws FileNotFoundException, IOException {
         super();
-        this.user = new User();
-        this.user.setApp(this); 
+        this.mainuser = new User();
+        this.mainuser.setApp(this); 
         contentmanagement = new ContentManagement();
-        user =new User();
+        mainuser =new User();
         this.users = new ArrayList<>();
         this.store_owners = new ArrayList<>();
         this.material_suppliers = new ArrayList<>();
@@ -90,16 +90,16 @@ public class MyApp {
                     String name = parts[0];
                     String password = parts[1];
                     switch (role) {
-                        case "user":
+                        case USER:
                             this.users.add(new User(name, password));
                             break;
-                        case "Store_owner":
+                        case STORE_OWNER:
                             this.store_owners.add(new StoreOwner(name, password));
                             break;
-                        case "Material_supplier":
+                        case MATERAIL_SUPPLIER:
                             this.material_suppliers.add(new MaterialSupplier(name, password));
                             break;
-                        case "Admin":
+                        case ADMIN:
                             this.admin_list.add(new Admin(name, password));
                             break;
                     }
