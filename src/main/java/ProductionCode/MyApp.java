@@ -9,7 +9,7 @@ import ProductionCode.*;
 
 public class MyApp {
 	
-
+    private static final String USER_FILE = "files/users.txt";
     private String filePath = "";
     public boolean isUserLoggedIn;
     public boolean isSignedUp;
@@ -66,7 +66,7 @@ public class MyApp {
         this.Products = new ArrayList<>();
         this.orders = new ArrayList<>();
 
-        loadData("files/users.txt", "user");
+        loadData(USER_FILE, "user");
         loadData("files/store_owners.txt", "Store_owner");
         loadData("files/material_suppliers.txt", "Material_supplier");
         loadData("files/admin.txt", "Admin");
