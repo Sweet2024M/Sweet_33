@@ -90,16 +90,16 @@ public class MyApp {
                     String name = parts[0];
                     String password = parts[1];
                     switch (role) {
-                        case "user":
+                        case USER_MAIN:
                             this.users.add(new User(name, password));
                             break;
-                        case "Store_owner":
+                        case STORE_OWNER:
                             this.store_owners.add(new StoreOwner(name, password));
                             break;
-                        case "Material_supplier":
+                        case MATERAIL_SUPPLIER:
                             this.material_suppliers.add(new MaterialSupplier(name, password));
                             break;
-                        case "Admin":
+                        case ADMIN:
                             this.admin_list.add(new Admin(name, password));
                             break;
                     }
@@ -112,19 +112,19 @@ public class MyApp {
 
     public void SignUp(String username, String password, String role) {
         switch (role) {
-            case "user":
+            case USER_MAIN:
                 filePath = USER_FILE;
                 users.add(new User(username, password));
                 break;
-            case "Store_owner":
+            case STORE_OWNER:
                 filePath = STORE_OWNER_FILE;
                 store_owners.add(new StoreOwner(username, password));
                 break;
-            case "Material_supplier":
+            case MATERAIL_SUPPLIER:
                 filePath = MATERIAL_SUPPLIER_FILE;
                 material_suppliers.add(new MaterialSupplier(username, password));
                 break;
-            case "Admin":
+            case ADMIN:
                 filePath = ADMIN_FILE;
                 admin_list.add(new Admin(username, password));
                 break;
@@ -185,13 +185,13 @@ public class MyApp {
             }
         }
 
-        if (role.equals("Store_owner")) {
+        if (role.equals(STORE_OWNER)) {
             for (StoreOwner a : store_owners) {
                 if (a.getUsername().equals(username) && a.getPassword().equals(password)) {
                     isUserLoggedIn = true;
                     StoreOwnerLoggedIn = true;
                     loggedName = username;
-                    ROLE = "Store_owner";
+                    ROLE = STORE_OWNER;
                     loggedPassword = password;
                     return;
                 }
