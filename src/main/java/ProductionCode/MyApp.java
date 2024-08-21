@@ -101,6 +101,9 @@ public class MyApp {
                         case ADMIN:
                             this.adminList.add(new Admin(name, password));
                             break;
+                            
+                        default:
+                        break;
                     }
                 }
             }
