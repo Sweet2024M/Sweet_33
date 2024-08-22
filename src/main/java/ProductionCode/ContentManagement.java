@@ -1,22 +1,31 @@
 package ProductionCode;
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
 public class ContentManagement {
 
-    private static final String RECIPES_FILE_PATH = "files/recipes.txt";
-    private static final String FEEDBACK_FILE_PATH = "files/feedback.txt";
-    private static final String RESPONSE_FEEDBACK_FILE_PATH = "files/responseFeedback.txt";
+    private static final String BASE_PATH = "files"; // Use relative path
+    private static final String RECIPES_FILE_PATH = Paths.get(BASE_PATH, "recipes.txt").toString();
+    private static final String FEEDBACK_FILE_PATH = Paths.get(BASE_PATH, "feedback.txt").toString();
+    private static final String RESPONSE_FILE_PATH = Paths.get(BASE_PATH, "responseFeedback.txt").toString();
 
-    public String feedbackDeleteMessage;
-    public String responseMessage;
-    public String RecipeDeletedMessage;
+    private static final String RECIPE_DELETED_MESSAGE = "Recipe deleted successfully.";
+    private static final String RESPONSE_SENT_MESSAGE = "Response sent successfully.";
+    private static final String FEEDBACK_DELETED_MESSAGE = "Feedback deleted successfully.";
 
-    // Helper method to read lines from a file
-    private List<String> readLinesFromFile(String filePath) {
+    private void printFileContent(String filePath) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            reader.lines().forEach(System.out::println);
+        } catch (IOException e) {
+            handleException(e, "Error reading file: " + filePath);
+        }
+    }
+
+    private List<String> readFileLines(String filePath) {
         List<String> lines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -24,114 +33,85 @@ public class ContentManagement {
                 lines.add(line);
             }
         } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception appropriately
+            handleException(e, "Error reading file lines: " + filePath);
         }
         return lines;
     }
 
-    // Helper method to write lines to a file
-    private void writeLinesToFile(String filePath, List<String> lines) {
+    private void writeFile(String filePath, List<String> lines) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (String line : lines) {
                 writer.write(line);
                 writer.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception appropriately
+            handleException(e, "Error writing to file: " + filePath);
         }
     }
 
-    public List<String> viewRecipes() {
-        List<String> recipes = readLinesFromFile(RECIPES_FILE_PATH);
-        for (String recipe : recipes) {
-            System.out.println(recipe);
+    private void appendToFile(String filePath, String content) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+            writer.write(content);
+            writer.newLine();
+        } catch (IOException e) {
+            handleException(e, "Error appending to file: " + filePath);
         }
-        return recipes; // Return the list of recipes
+    }
+
+    private String findUsernameById(String id, String filePath) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            return reader.lines()
+                .filter(line -> line.startsWith(id + ":"))
+                .map(line -> line.split(":")[1])
+                .findFirst()
+                .orElse(null);
+        } catch (IOException e) {
+            handleException(e, "Error finding username by ID in file: " + filePath);
+        }
+        return null;
+    }
+
+    private void handleException(IOException e, String message) {
+        // Log the error and notify the user
+        System.err.println(message);
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, message);
+    }
+
+    public void viewRecipes() {
+        printFileContent(RECIPES_FILE_PATH);
     }
 
     public void deleteRecipes(String product) {
-        List<String> recipes = new ArrayList<>();
-
-        // Read the file and store all recipes except the one to be deleted
-        try (BufferedReader reader = new BufferedReader(new FileReader(RECIPES_FILE_PATH))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Check if the line starts with the product name followed by a colon
-                if (!line.toLowerCase().startsWith(product.toLowerCase() + ":")) {
-                    recipes.add(line);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Write the updated list of recipes back to the file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RECIPES_FILE_PATH))) {
-            for (String recipe : recipes) {
-                writer.write(recipe);
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public List<String> viewFeedback() {
-        List<String> feedbacks = readLinesFromFile(FEEDBACK_FILE_PATH);
-        for (String feedback : feedbacks) {
-            System.out.println(feedback);
-        }
-        return feedbacks; // Return the list of feedbacks
+        List<String> recipes = readFileLines(RECIPES_FILE_PATH);
+        recipes.removeIf(line -> line.toLowerCase().startsWith(product.toLowerCase() + ":"));
+        writeFile(RECIPES_FILE_PATH, recipes);
+        printMessages(RECIPE_DELETED_MESSAGE);
     }
 
     public void responseFeedback(String id, String responseMessage) {
-        List<String> feedbacks = readLinesFromFile(FEEDBACK_FILE_PATH);
-        String username = null;
-
-        for (String line : feedbacks) {
-            String[] feedbackParts = line.split(":");
-            if (feedbackParts.length >= 3 && feedbackParts[0].equals(id)) {
-                username = feedbackParts[1];
-                break;
-            }
-        }
-
+        String username = findUsernameById(id, FEEDBACK_FILE_PATH);
         if (username != null) {
             String response = "Response to " + username + ": " + responseMessage;
-            List<String> responses = readLinesFromFile(RESPONSE_FEEDBACK_FILE_PATH);
-            responses.add(response);
-            writeLinesToFile(RESPONSE_FEEDBACK_FILE_PATH, responses);
-            this.responseMessage = "Response sent successfully.";
+            appendToFile(RESPONSE_FILE_PATH, response);
+            printMessages(RESPONSE_SENT_MESSAGE);
         } else {
-            System.out.println("Feedback with ID " + id + " not found.");
+            printMessages("Feedback with ID " + id + " not found.");
         }
+    }
+
+    public void viewFeedback() {
+        printFileContent(FEEDBACK_FILE_PATH);
     }
 
     public void deleteFeedback(String id) {
-        List<String> feedbacks = readLinesFromFile(FEEDBACK_FILE_PATH);
-        List<String> updatedFeedbacks = new ArrayList<>();
-        for (String line : feedbacks) {
-            String[] parts = line.split(":");
-            if (parts.length > 1 && !parts[0].equals(id)) {
-                updatedFeedbacks.add(line);
-            }
-        }
-        writeLinesToFile(FEEDBACK_FILE_PATH, updatedFeedbacks);
-        feedbackDeleteMessage = "Feedback deleted successfully.";
+        List<String> feedbacks = readFileLines(FEEDBACK_FILE_PATH);
+        feedbacks.removeIf(line -> line.startsWith(id + ":"));
+        writeFile(FEEDBACK_FILE_PATH, feedbacks);
+        printMessages(FEEDBACK_DELETED_MESSAGE);
     }
 
     public void printMessages(String message) {
-      //  JOptionPane.showMessageDialog(null, message);
-    }
-    public int countRecipes() {
-        int recipeCount = 0;
-        try (BufferedReader reader = new BufferedReader(new FileReader(RECIPES_FILE_PATH))) {
-            while (reader.readLine() != null) {
-                recipeCount++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception appropriately
-        }
-        return recipeCount;
+        JOptionPane.showMessageDialog(null, message);
     }
 }
