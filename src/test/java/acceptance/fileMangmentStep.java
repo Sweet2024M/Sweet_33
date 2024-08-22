@@ -11,14 +11,14 @@ import java.util.logging.Logger;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import productionCode.Admin;
-import productionCode.ContentManagement;
-import productionCode.MaterialSupplier;
-import productionCode.MyApp;
-import productionCode.Order;
-import productionCode.Product;
-import productionCode.StoreOwner;
-import productionCode.User;
+import ProductionCode.Admin;
+import ProductionCode.ContentManagement;
+import ProductionCode.MaterialSupplier;
+import ProductionCode.MyApp;
+import ProductionCode.Order;
+import ProductionCode.Product;
+import ProductionCode.StoreOwner;
+import ProductionCode.User;
 
 public class fileMangmentStep {
 	  private static final String USER_FILE = "files/users.txt";
