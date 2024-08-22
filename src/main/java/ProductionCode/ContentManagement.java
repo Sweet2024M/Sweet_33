@@ -50,15 +50,30 @@ public class ContentManagement {
     }
 
     public void deleteRecipes(String product) {
-        List<String> recipes = readLinesFromFile(RECIPES_FILE_PATH);
-        List<String> updatedRecipes = new ArrayList<>();
-        for (String line : recipes) {
-            if (!line.toLowerCase().startsWith(product.toLowerCase() + ":")) {
-                updatedRecipes.add(line);
+        List<String> recipes = new ArrayList<>();
+
+        // Read the file and store all recipes except the one to be deleted
+        try (BufferedReader reader = new BufferedReader(new FileReader(RECIPES_FILE_PATH))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Check if the line starts with the product name followed by a colon
+                if (!line.toLowerCase().startsWith(product.toLowerCase() + ":")) {
+                    recipes.add(line);
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        writeLinesToFile(RECIPES_FILE_PATH, updatedRecipes);
-        RecipeDeletedMessage = "Recipe deleted successfully.";
+
+        // Write the updated list of recipes back to the file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(RECIPES_FILE_PATH))) {
+            for (String recipe : recipes) {
+                writer.write(recipe);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<String> viewFeedback() {
@@ -106,6 +121,17 @@ public class ContentManagement {
     }
 
     public void printMessages(String message) {
-        JOptionPane.showMessageDialog(null, message);
+      //  JOptionPane.showMessageDialog(null, message);
+    }
+    public int countRecipes() {
+        int recipeCount = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(RECIPES_FILE_PATH))) {
+            while (reader.readLine() != null) {
+                recipeCount++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+        }
+        return recipeCount;
     }
 }
