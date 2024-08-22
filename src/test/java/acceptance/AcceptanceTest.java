@@ -10,7 +10,7 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(
 
-        features = "Features/user/ExplorationAndPurchase.feature",
+        features = "Features",
         plugin = {"html:target/cucumber-report/report.html"},
         monochrome = true,
         glue = "acceptance"
