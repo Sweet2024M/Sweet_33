@@ -11,9 +11,9 @@ public class ContentManagement {
     private static final String FEEDBACK_FILE_PATH = "files/feedback.txt";
     private static final String RESPONSE_FEEDBACK_FILE_PATH = "files/responseFeedback.txt";
 
-     String feedbackDeleteMessage;
-     String responseMessage;
-     String RecipeDeletedMessage;
+    public String feedbackDeleteMessage;
+    public String responseMessage;
+    public String RecipeDeletedMessage;
 
     // Helper method to read lines from a file
     private List<String> readLinesFromFile(String filePath) {
@@ -41,11 +41,12 @@ public class ContentManagement {
         }
     }
 
-    public void viewRecipes() {
+    public List<String> viewRecipes() {
         List<String> recipes = readLinesFromFile(RECIPES_FILE_PATH);
         for (String recipe : recipes) {
             System.out.println(recipe);
         }
+        return recipes; // Return the list of recipes
     }
 
     public void deleteRecipes(String product) {
@@ -58,6 +59,14 @@ public class ContentManagement {
         }
         writeLinesToFile(RECIPES_FILE_PATH, updatedRecipes);
         RecipeDeletedMessage = "Recipe deleted successfully.";
+    }
+
+    public List<String> viewFeedback() {
+        List<String> feedbacks = readLinesFromFile(FEEDBACK_FILE_PATH);
+        for (String feedback : feedbacks) {
+            System.out.println(feedback);
+        }
+        return feedbacks; // Return the list of feedbacks
     }
 
     public void responseFeedback(String id, String responseMessage) {
@@ -77,16 +86,9 @@ public class ContentManagement {
             List<String> responses = readLinesFromFile(RESPONSE_FEEDBACK_FILE_PATH);
             responses.add(response);
             writeLinesToFile(RESPONSE_FEEDBACK_FILE_PATH, responses);
-           
+            this.responseMessage = "Response sent successfully.";
         } else {
             System.out.println("Feedback with ID " + id + " not found.");
-        }
-    }
-
-    public void viewFeedback() {
-        List<String> feedbacks = readLinesFromFile(FEEDBACK_FILE_PATH);
-        for (String feedback : feedbacks) {
-            System.out.println(feedback);
         }
     }
 
