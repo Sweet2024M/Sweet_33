@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-
 public class MyApp {
 
     private static final Logger logger = Logger.getLogger(MyApp.class.getName());
@@ -84,7 +83,7 @@ public class MyApp {
         loadOrders();
     }
 
-    private void loadData(String fileName, String role) {
+    public void loadData(String fileName, String role) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -156,7 +155,7 @@ public class MyApp {
         }
     }
 
-    private void rewriteFile(String filePath, ArrayList<?> list) {
+    public void rewriteFile(String filePath, ArrayList<?> list) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
             for (Object obj : list) {
                 if (obj instanceof User) {
@@ -420,7 +419,7 @@ public class MyApp {
         return false;
     }
 
-    private void loadProducts() throws FileNotFoundException, IOException {
+    public void loadProducts() throws FileNotFoundException, IOException {
         try (BufferedReader br = new BufferedReader(new FileReader("files/products.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -594,7 +593,7 @@ public class MyApp {
         return false;
     }
 
-    private void loadOrders() throws FileNotFoundException, IOException {
+    public void loadOrders() throws FileNotFoundException, IOException {
         orders.clear();  // Clear existing orders before loading new ones
         try (BufferedReader br = new BufferedReader(new FileReader("files/orders.txt"))) {
             String line;
