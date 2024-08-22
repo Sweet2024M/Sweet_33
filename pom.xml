@@ -25,7 +25,11 @@
     <artifactId>cucumber-picocontainer</artifactId>
     <version>7.18.1</version>
 </dependency>
-  
+  <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.12</version>
+        </dependency>
   </dependencies>
 <build>
         <plugins>
@@ -60,6 +64,7 @@
             </configuration>
         </plugin>
         </plugins>
+  
     </build>
 <properties>
   <sonar.organization>sweet2024m</sonar.organization>
