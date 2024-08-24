@@ -1,22 +1,41 @@
 Feature: User Management
- # As an Admin
- # I want to manage user accounts including store owners and raw material suppliers
- # So that I can control system access and permissions
+  As an admin
+  I want to manage user accounts including users, store owners, and raw material suppliers
+  So that I can control access to the system
 
-  Scenario: Add a new user
-    Given I am logged in as an Admin
-    When I select to add a user
-    And I fill in the new user details
-    Then the new user should be created
+  Scenario: View all user accounts
+    Given I am logged in as an admin
+    And I am on the admin dashboard
+    And I select "1" from the dashboard options
+    And I am on the user management page
+    When I view the list of users
+    Then I should see all users in the list
 
-  Scenario: Update a user
-    Given I am logged in as an Admin
-    And a user exists
-    When I select a user to update
-    Then the user details should be updated
+  Scenario: Add a new user account
+    Given I am logged in as an admin
+    And I am on the admin dashboard
+    And I select "User Management" from the dashboard options
+    And I am on the user management page
+    When I choose to add a new user and I enter the username "ahmad" , password "123" , and role "Admin"
+    And I submit the new user details
+    Then I should see all users in the list
+    And I should see a success message "User added successfully."
 
-  Scenario: Delete a user
-    Given I am logged in as an Admin
-    And a user exists
-    When I select a user to delete
-    Then the user should be removed from the system
+  Scenario: Delete a user account
+    Given I am logged in as an admin
+    And I am on the admin dashboard
+    And I select "User Management" from the dashboard options
+    And I am on the user management page
+    When I choose to delete the user with username "jawad"
+    Then I should see all users in the list
+    And I should see a success message "User deleted successfully."
+
+  Scenario: Update user information
+    Given I am logged in as an admin
+    And I am on the admin dashboard
+    And I select "User Management" from the dashboard options
+    And I am on the user management page
+    When I choose to update the user with oldusername "ahmad" and I enter the new username "ahmad" and I enter the new password "newpassword" 
+    And I submit the updated user details
+    Then I should see all users in the list
+    And I should see a success message "User updated successfully."
