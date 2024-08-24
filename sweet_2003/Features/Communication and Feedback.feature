@@ -1,17 +1,21 @@
 Feature: Communication and Feedback
-  As a Beneficiary User
-  I want to communicate with store owners and provide feedback
-  So that I can get assistance and share my experience
 
-  Scenario: Communicate with store owners
-    Given I am logged in as a Beneficiary User
-    When I navigate to a store owner's page
-    And I send a message
-    Then the store owner should receive the message
+  As a beneficiary user,
+  I want to directly communicate with store owners and suppliers for inquiries or assistance,
+  and provide feedback on purchased products and shared recipes,
+  So that I can ensure a satisfying experience and help improve the offerings on the platform.
 
-  Scenario: Provide feedback on purchased products
-    Given I am logged in as a Beneficiary User
-    When I navigate to my order history
-    And I select a purchased product
-    And I write and submit feedback
-    Then my feedback should be recorded
+  Scenario: Direct Communication with Store Owners and Suppliers
+    Given I am logged in as user
+    And I am on the user dashboard
+    When I choose to send a message to "owner" and enter the message "string"
+    Then I should see a success message "message sent successfully."
+    And return back to the user dashboard
+
+  Scenario: Provide Feedback on Purchased Products
+    Given I am logged in as user
+    And I have received a purchased dessert
+    When I navigate to the My Orders page
+    And I select the dessert to provide feedback on and enter feedback message "that is a good dessert"
+    Then I should see a success message "feedback send  successfully."   
+    And return back to the user dashboard
