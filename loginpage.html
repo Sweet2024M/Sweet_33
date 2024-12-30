@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cars</title>
+
+    <!-- Link Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Link File CSS -->
+    <link rel="stylesheet" href="style_login.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="img/car-logo.png" class="logo" alt="">
+            <!-- <div class="menu">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Features</a>
+                <a href="#">Variations</a>
+                <a href="#">Specials</a>
+                <a href="#">Contact</a>
+            </div>
+
+            <div class="social">
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            </div> -->
+        </nav>
+    </header>
+    
+    <div class="hero">
+
+        <div class="text">
+            <h4>Powerful, Fun and</h4>
+            <h1>Fierce to <br> <span>Drive</span></h1>
+            <p>Real Poise, Real Power, Real Perfomance.</p>
+            <!-- <a href="#" class="btn">book a test ride</a> -->
+        </div>
+    </div>
+
+
+
+<!-- =========================LOGO BOX======================== -->
+<!-- =========================LOGO BOX======================== -->
+<!-- =========================LOGO BOX======================== -->
+<!-- =========================LOGO BOX======================== -->
+<!-- =========================LOGO BOX======================== -->
+
+    <div class="wrapper">
+        <div class="form-wrapper sign-in">
+          <form action="">
+            <h2>Login</h2>
+            <div class="input-group">
+              <input type="text" required>
+              <label for="">Username</label>
+            </div>
+            <div class="input-group">
+              <input type="password" required>
+              <label for="">Password</label>
+            </div>
+            <div class="remember">
+              <label><input type="checkbox"> Remember me</label>
+            </div>
+            <button id="openNewTab" type="submit">Login</button>
+            <div class="signUp-link">
+              <p>Don't have an account? <a href="#" class="signUpBtn-link">Sign Up</a></p>
+            </div>
+          </form>
+        </div>
+        <div class="form-wrapper sign-up">
+          <form action="">
+            <h2>Sign Up</h2>
+            <div class="input-group">
+              <input type="text" required>
+              <label for="">Username</label>
+            </div>
+            <div class="input-group">
+              <input type="email" required>
+              <label for="">Email</label>
+            </div>
+            <div class="input-group">
+              <input type="password" required>
+              <label for="">Password</label>
+            </div>
+            <div class="remember">
+              <label><input type="checkbox"> I agree to the terms & conditions</label>
+            </div>
+            <button type="submit">Sign Up</button>
+            <div class="signUp-link">
+              <p>Already have an account? <a href="#" class="signInBtn-link">Sign In</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+      <script >
+
+        const signInBtnLink = document.querySelector('.signInBtn-link');
+        const signUpBtnLink = document.querySelector('.signUpBtn-link');
+        const wrapper = document.querySelector('.wrapper');
+        signUpBtnLink.addEventListener('click', () => {
+            wrapper.classList.toggle('active');
+        });
+        signInBtnLink.addEventListener('click', () => {
+              wrapper.classList.toggle('active');
+          });
+          
+                    </script>
+
+
+
+
+
+    <script>
+        let heroBg = document.querySelector('.hero');
+
+        setInterval(() => {
+            heroBg.style.backgroundImage = "url(img/bg-light.jpg)"
+            
+            setTimeout(() => {
+                heroBg.style.backgroundImage = "url(img/bg.jpg)"
+            }, 1000);
+        }, 2200);
+    </script>
+
+<!-- <script>
+    document.getElementById('openNewTab').addEventListener('click', () => {
+      const newTab = window.open('', '_blank'); // Open a blank page in a new tab
+      newTab.location.replace("index.html");   // Replace the location in the new tab
+    });
+  </script> -->
+
+</body>
+</html>

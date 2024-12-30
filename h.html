@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <style>
+        div.container{
+            width: 400px; height: 500px;
+         border: 2px solid black ;
+        position: relative;
+        overflow: hidden;
+        
+        }
+        #bt{
+            width: 220px;height: 100px;
+            font-size: 1.5em; /* 1.5 times the parent's font size */
+
+            background-color:steelblue ;
+            position: relative;
+            color: white;
+            font-weight: bolder;
+            border-radius: 18%;
+            padding: 10px 20px;
+      position: absolute;
+      left: 20%;
+      top: 40%;
+
+        }
+        #bt:hover{
+            background-color:lightsteelblue ;
+            color: white;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+    
+
+
+<div class="container">
+        <button id="bt">Click Me To Show You Same Action</button>
+
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- just by css -->
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<style> 
+
+#container{
+  width: 400px;
+  height: 600px;
+  border: 1px solid black;
+  position: absolute;
+        overflow: hidden;
+
+}
+
+#bool1 {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: red;
+position: relative;
+animation-name: bool1;
+animation-duration: 4s ;
+animation-iteration-count: infinite;
+animation-direction: alternate;  
+}
+
+
+#bool2 {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: blue;
+position: absolute;
+
+animation-name: bool2;
+animation-duration: 4s ;
+animation-iteration-count: infinite;
+animation-direction: alternate; 
+flex: auto; 
+}
+
+
+
+@keyframes bool1 {
+  from{left: 0px;top :0px;}
+  to{left: 0px;top :500px;}
+  
+  
+}
+
+
+@keyframes bool2 {
+  from{left: 0px;top :0px;}
+  to{left: 300px;top :0px;}
+  
+  
+}
+
+
+
+
+
+</style>
+</head>
+<body>
+
+    <a href="http://www.facebook.com">anchor</a>
+    <a src="www.facebook.com">src</a>
+
+
+<div id="container">
+  <div id="bool1"></div>
+  <div id="bool2"></div>
+
+</div>
+
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- by just js -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تحريك دائرة</title>
+  <style>
+    #container {
+      width: 500px;
+      height: 200px;
+      border: 2px solid black;
+      position: relative;
+      overflow: hidden;
+      margin: 50px auto;
+    }
+    #circle {
+      width: 50px;
+      height: 50px;
+      background-color: red;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  </style>
+</head>
+<body>
+<div id="container">
+  <div id="circle"></div>
+</div>
+<script>
+  const circle = document.getElementById("circle");
+  const container = document.getElementById("container");
+  let position = 0;
+  let direction = 1;
+  const speed = 2;
+  const containerWidth = container.offsetWidth;
+  const circleWidth = circle.offsetWidth;
+  function moveCircle() {
+    position += direction * speed;
+    console.log(position);
+    if (position + circleWidth >= containerWidth || position <= 0) {
+      direction *= -1;
+    }
+    circle.style.left = position + "px";
+    requestAnimationFrame(moveCircle);
+  }
+  moveCircle();
+</script>
+</body>
+</html> -->
+
+
+
+
+
